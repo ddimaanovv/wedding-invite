@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Элина & Чингиз</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --gold: #c9ab81;
+        --dark: #1f1f1f;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        color: white;
+        background: black;
+        overflow-x: hidden;
+      }
+
+      /* =========================
+   PARALLAX BACKGROUND
+========================= */
+      .parallax-bg {
+        position: fixed;
+        inset: -12%;
+        background-image: url("https://media.nazaccent.ru/files/b1/83/b1837b4808e19b898a79cd2fdceb4b5a.JPG");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        transform: scale(1.12);
+        will-change: transform;
+        z-index: -2;
+      }
+
+      /* затемнение */
+      .parallax-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.7));
+      }
+
+      /* GRAIN */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+        z-index: 999;
+      }
+
+      /* TYPO */
+      h1,
+      h2,
+      h3 {
+        font-family: "Playfair Display", serif;
+        font-weight: 600;
+      }
+
+      section {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 120px 20px;
+      }
+
+      /* FADE */
+      .fade {
+        opacity: 0;
+        transform: translateY(60px);
+        transition: all 1.3s ease;
+      }
+      .fade.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* HERO */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(42px, 7vw, 82px);
+        letter-spacing: 2px;
+      }
+
+      .hero p {
+        margin-top: 10px;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        opacity: 0.85;
+      }
+
+      /* GOLD LINE */
+      .gold-line {
+        width: 160px;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        margin: 30px auto;
+      }
+
+      /* GLASS */
+      .glass {
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(10px);
+        border-radius: 28px;
+        padding: 50px;
+        color: var(--dark);
+        box-shadow: 0 40px 100px rgba(0, 0, 0, 0.35);
+      }
+
+      /* CALENDAR */
+      .calendar {
+        display: inline-block;
+        padding: 40px 55px;
+        border: 2px solid var(--gold);
+        border-radius: 26px;
+        text-align: center;
+      }
+      .calendar .month,
+      .calendar .year {
+        font-size: 22px;
+        letter-spacing: 3px;
+      }
+      .calendar .day {
+        font-size: 88px;
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+        color: var(--gold);
+        line-height: 1;
+        margin: 10px 0;
+      }
+
+      /* PROGRAM */
+      .program li {
+        list-style: none;
+        padding: 18px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+        font-size: 18px;
+      }
+
+      /* LOCATION */
+      .location {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .location img {
+        width: 100%;
+        border-radius: 22px;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+      }
+
+      /* FORM */
+      .form-wrapper iframe {
+        width: 100%;
+        height: 650px;
+        border: none;
+      }
+
+      footer {
+        text-align: center;
+        padding: 80px 20px;
+        /* opacity: 0.6; */
+        font-size: 28px;
+      }
+
+      @media (max-width: 900px) {
+        section {
+          padding: 90px 16px;
+        }
+        .location {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parallax-bg" id="parallax"></div>
+
+    <section class="hero fade">
+      <div>
+        <h1>Элина & Чингиз</h1>
+        <div class="gold-line"></div>
+        <p>4 июля 2026</p>
+      </div>
+    </section>
+
+    <section class="fade">
+      <div class="glass" style="text-align: center">
+        <h2>Дата нашего дня</h2>
+        <div class="gold-line"></div>
+        <div class="calendar">
+          <div class="month">ИЮЛЬ</div>
+          <div class="day">4</div>
+          <div class="year">2026</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="fade">
+      <div class="glass">
+        <h2 style="text-align: center">Программа дня</h2>
+        <div class="gold-line"></div>
+        <ul class="program">
+          <li>15:00 — Сбор гостей</li>
+          <li>16:00 — Церемония</li>
+          <li>17:00 — Фото и аперитив</li>
+          <li>17:10 — Фотка с Диманом и Ирой</li>
+          <li>18:30 — Банкет</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="fade">
+      <div class="glass">
+        <h2 style="text-align: center">Место проведения</h2>
+        <div class="gold-line"></div>
+
+        <div class="location">
+          <img
+            src="https://buyingbusinesstravel.com.ru/upload/medialibrary/f04/ixfld41v7d6ns81lhg2ozlh96syue8qr.jpg"
+            alt="Место проведения"
+          />
+
+          <div>
+            <h3 style="padding-bottom: 20px">Лакшери коллекшн рэдисон</h3>
+            <p>
+              Уютная площадка с невероятным люксом, светом и пространством для
+              праздника
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="fade">
+      <div class="glass">
+        <h2 style="text-align: center">Анкета гостя</h2>
+        <div class="gold-line"></div>
+        <div class="form-wrapper">
+          <iframe
+            src="https://docs.google.com/forms/d/e/ВАШ_ID_ФОРМЫ/viewform?embedded=true"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      С любовью, Элина и Чингиз <span style="color: #ff3636">&#10084;</span>
+    </footer>
+
+    <script>
+      window.addEventListener("scroll", () => {
+        const scroll = window.pageYOffset;
+        document.getElementById("parallax").style.transform =
+          `translateY(${-scroll * 0.05}px) scale(1.12)`;
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) e.target.classList.add("show");
+          });
+        },
+        { threshold: 0.2 },
+      );
+
+      document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
