@@ -2,7 +2,7 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Элина & Чингиз</title>
     <script src="https://forms.yandex.ru/_static/embed.js"></script>
     <link
@@ -298,11 +298,6 @@
       );
 
       document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
-      const iframe = document.getElementById("my-iframe");
-      iframe.onload = function () {
-        this.style.height =
-          this.contentWindow.document.body.scrollHeight + "px";
-      };
     </script>
   </body>
 </html>
