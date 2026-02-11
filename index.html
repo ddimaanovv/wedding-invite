@@ -2,9 +2,11 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <title>Элина & Чингиз</title>
-    <script src="https://forms.yandex.ru/_static/embed.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap"
       rel="stylesheet"
@@ -39,7 +41,7 @@
         background-repeat: no-repeat;
         background-position: center center;
         background-size: cover;
-        transform: scale(1.12);
+        /* transform: scale(1.12); */
         will-change: transform;
         z-index: -2;
       }
@@ -200,8 +202,246 @@
           grid-template-columns: 1fr;
         }
       }
+
+      .rsvp-card {
+        max-width: 520px;
+        margin: 0 auto;
+        padding: 50px 40px;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        border-radius: 28px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+        animation: fadeUp 1s ease;
+      }
+
+      .rsvp-title {
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 10px;
+        font-weight: 500;
+        color: black;
+      }
+
+      .rsvp-sub {
+        text-align: center;
+        font-size: 15px;
+        color: #777;
+        margin-bottom: 35px;
+      }
+      .rsvp-somebody {
+        text-align: left;
+        font-size: 15px;
+        color: #000000;
+        margin: 15px 0 5px;
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .radio-option {
+        flex: 1;
+        position: relative;
+      }
+
+      .radio-option input {
+        display: none;
+      }
+
+      .radio-box {
+        padding: 16px;
+        border-radius: 16px;
+        border: 1.5px solid #777;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        color: black;
+      }
+
+      .radio-option input:checked + .radio-box {
+        background-color: rgb(177, 197, 163);
+      }
+
+      .input-modern {
+        width: 100%;
+        padding: 16px;
+        margin-top: 20px;
+        border-radius: 14px;
+        border: 1.5px solid #e5e5e5;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .input-modern:focus {
+        outline: none;
+        border-color: #c9ab81;
+        box-shadow: 0 0 0 4px rgba(201, 171, 129, 0.15);
+      }
+
+      .save-btn-modern {
+        width: 100%;
+        margin-top: 30px;
+        padding: 16px;
+        border-radius: 16px;
+        border: none;
+        font-size: 15px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        background: linear-gradient(135deg, #c9ab81, #b89365);
+        color: white;
+        transition: all 0.3s ease;
+      }
+
+      .save-btn-modern:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      }
+
+      .status-text {
+        text-align: center;
+        margin-top: 18px;
+        font-size: 14px;
+        color: #4caf50;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .status-text.show {
+        opacity: 1;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 600px) {
+        .rsvp-card {
+          padding: 35px 25px;
+        }
+      }
     </style>
   </head>
+  <!-- FIREBASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      serverTimestamp,
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDCcOYnGQksJUe6P-kKlUEOtmsIXdBwH4E",
+      authDomain: "wedding-invite-51714.firebaseapp.com",
+      projectId: "wedding-invite-51714",
+      storageBucket: "wedding-invite-51714.firebasestorage.app",
+      messagingSenderId: "881433018362",
+      appId: "1:881433018362:web:5c573164a8ea308004ee43",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Получаем ID гостя из URL
+    const params = new URLSearchParams(window.location.search);
+    const guestId = params.get("guest");
+
+    if (!guestId) {
+      document.getElementById("rsvp-section").innerHTML =
+        "<h3 style='text-align:center'>Ошибка: отсутствует персональная ссылка.</h3>";
+    } else {
+      loadGuest();
+    }
+    async function loadGuest() {
+      const ref = doc(db, "guests", guestId);
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+        const data = snap.data();
+
+        document.getElementById("firstName").value = data.firstName || "";
+        document.getElementById("lastName").value = data.lastName || "";
+        document.getElementById("phone").value = data.phone || "";
+
+        if (data.withSomeone) {
+          document.getElementById("yes").checked = true;
+          document.getElementById("companion-block").style.display = "block";
+          document.getElementById("companionName").value =
+            data.companionName || "";
+        } else if (data.withSomeone === false) {
+          document.getElementById("no").checked = true;
+        }
+      }
+    }
+
+    document.getElementById("yes").addEventListener("change", () => {
+      document.getElementById("companion-block").style.display = "block";
+    });
+
+    document.getElementById("no").addEventListener("change", () => {
+      document.getElementById("companion-block").style.display = "none";
+    });
+
+    document.getElementById("saveBtn").addEventListener("click", async () => {
+      const firstName = document.getElementById("firstName").value.trim();
+      const lastName = document.getElementById("lastName").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const withSomeone = document.getElementById("yes").checked;
+      const noSelected = document.getElementById("no").checked;
+      const companionName = document
+        .getElementById("companionName")
+        .value.trim();
+
+      // Валидация
+      if (!firstName || !lastName || !phone) {
+        alert("Пожалуйста, заполните все обязательные поля.");
+        return;
+      }
+
+      if (!withSomeone && !noSelected) {
+        alert("Пожалуйста, выберите вариант ответа.");
+        return;
+      }
+
+      if (withSomeone && !companionName) {
+        alert("ФИО того, с кем придете.");
+        return;
+      }
+
+      // Простая проверка телефона
+      const phoneRegex = /^[0-9+\-\s()]{6,20}$/;
+      if (!phoneRegex.test(phone)) {
+        alert("Введите корректный номер телефона.");
+        return;
+      }
+
+      await setDoc(doc(db, "guests", guestId), {
+        firstName,
+        lastName,
+        phone,
+        withSomeone,
+        companionName: withSomeone ? companionName : "",
+        updatedAt: serverTimestamp(),
+      });
+
+      const status = document.getElementById("status");
+      status.classList.add("show");
+      setTimeout(() => status.classList.remove("show"), 3000);
+    });
+  </script>
+
   <body>
     <div class="parallax-bg" id="parallax"></div>
 
@@ -262,18 +502,63 @@
     </section>
 
     <section class="fade">
-      <div class="glass glass-form">
-        <h2 style="text-align: center">Анкета гостя</h2>
-        <div class="gold-line"></div>
-        <div class="form-wrapper">
-          <iframe
-            src="https://forms.yandex.ru/u/6988f44c6d2d73ac431e755c?iframe=1"
-            frameborder="0"
-            name="ya-form-6988f44c6d2d73ac431e755c"
-            id="my-iframe"
-          >
-          </iframe>
+      <div class="rsvp-card" id="rsvp-section">
+        <div class="rsvp-title">Подтверждение присутствия</div>
+        <div class="rsvp-sub">Пожалуйста, заполните форму ниже</div>
+
+        <!-- Имя -->
+        <input
+          type="text"
+          id="firstName"
+          class="input-modern"
+          placeholder="Имя *"
+          required
+        />
+
+        <!-- Фамилия -->
+        <input
+          type="text"
+          id="lastName"
+          class="input-modern"
+          placeholder="Фамилия *"
+          required
+        />
+
+        <!-- Телефон -->
+        <input
+          type="tel"
+          id="phone"
+          class="input-modern"
+          placeholder="Номер телефона *"
+          required
+        />
+
+        <div class="rsvp-somebody">Вы будете с кем-то? *</div>
+
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="with" id="yes" required />
+            <div class="radio-box">Да</div>
+          </label>
+
+          <label class="radio-option">
+            <input type="radio" name="with" id="no" required />
+            <div class="radio-box">Нет</div>
+          </label>
         </div>
+
+        <div id="companion-block" style="display: none">
+          <input
+            type="text"
+            id="companionName"
+            class="input-modern"
+            placeholder="ФИО сопровождающего *"
+          />
+        </div>
+
+        <button id="saveBtn" class="save-btn-modern">Сохранить ответ</button>
+
+        <div id="status" class="status-text">Ответ сохранён ✓</div>
       </div>
     </section>
 
