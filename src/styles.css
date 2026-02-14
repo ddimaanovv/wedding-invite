@@ -125,7 +125,9 @@ h2 {
   margin-top: 22px;
   font-size: clamp(1rem, 2.2vw, 1.25rem);
 }
-
+.hero-appeal {
+  margin: 0 auto;
+}
 .hero-note {
   width: min(900px, calc(100% - 2rem));
   margin: 0 auto;
