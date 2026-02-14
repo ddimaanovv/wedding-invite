@@ -1,4 +1,5 @@
 ﻿:root {
+  --stable-vh: 1svh;
   --gold: #d7ba8d;
   --gold-deep: #b69161;
   --text-light: #473a2c;
@@ -38,11 +39,11 @@ body {
 section {
   width: min(1100px, calc(100% - 2rem));
   margin: 0 auto;
-  padding: clamp(56px, 7svh, 92px) 0;
+  padding: clamp(56px, calc(var(--stable-vh) * 7), 92px) 0;
 }
 
 #details {
-  padding-top: clamp(20px, 2.5svh, 46px);
+  padding-top: clamp(20px, calc(var(--stable-vh) * 2.5), 46px);
 }
 
 h1,
@@ -91,7 +92,7 @@ h2 {
 
 .hero-stage {
   position: relative;
-  min-height: 100svh;
+  min-height: calc(var(--stable-vh) * 100);
   width: 100%;
   margin: 0;
   padding: 0;
@@ -99,7 +100,7 @@ h2 {
 }
 
 .hero-photo-shell {
-  height: 60svh;
+  height: calc(var(--stable-vh) * 60);
   min-height: 340px;
   width: 50%;
   margin: 0 auto;
@@ -134,7 +135,7 @@ h2 {
 }
 
 .hero-intro {
-  min-height: 56svh;
+  min-height: calc(var(--stable-vh) * 56);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -142,8 +143,9 @@ h2 {
   gap: 14px;
   width: min(1100px, calc(100% - 2rem));
   margin: 0 auto;
-  transform: translateY(clamp(-90px, -11svh, -150px));
-  padding: clamp(14px, 3svh, 34px) 0 clamp(72px, 10svh, 110px);
+  transform: translateY(clamp(-90px, calc(var(--stable-vh) * -11), -150px));
+  padding: clamp(14px, calc(var(--stable-vh) * 3), 34px) 0
+    clamp(72px, calc(var(--stable-vh) * 10), 110px);
   z-index: 2;
 }
 
@@ -193,7 +195,7 @@ h2 {
 .scroll-hint {
   position: absolute;
   left: 50%;
-  bottom: clamp(12px, 2.4svh, 24px);
+  bottom: clamp(12px, calc(var(--stable-vh) * 2.4), 24px);
   transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
@@ -453,7 +455,7 @@ h2 {
 }
 
 .contacts-section {
-  padding-top: clamp(34px, 4.8svh, 62px);
+  padding-top: clamp(34px, calc(var(--stable-vh) * 4.8), 62px);
 }
 
 .contacts-card {
@@ -843,14 +845,14 @@ footer {
   }
 
   .hero-photo-shell {
-    height: 46svh;
+    height: calc(var(--stable-vh) * 46);
     min-height: 300px;
     width: 100%;
   }
 
   .hero-intro {
     width: min(1100px, calc(100% - 1rem));
-    transform: translateY(clamp(-68px, -8svh, -98px));
+    transform: translateY(clamp(-68px, calc(var(--stable-vh) * -8), -98px));
   }
 
   section {
@@ -925,8 +927,10 @@ footer {
   .ambient-bg {
     position: fixed;
     inset: 0;
-    height: 100svh;
+    height: calc(var(--stable-vh) * 100);
     transform: translateZ(0);
     will-change: transform;
   }
 }
+
+
