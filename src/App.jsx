@@ -214,7 +214,7 @@ function App() {
             <section className="fade" id="rsvp">
                 <div className="glass rsvp-card">
                     <h2>Подтверждение присутствия</h2>
-                    <p>Пожалуйста, заполните форму до 1 июня 2026 года.</p>
+                    <p>Пожалуйста, заполните анкету.</p>
 
                     <div className="form-embed">
                         <iframe

@@ -3,7 +3,11 @@
   --gold-deep: #b69161;
   --text-light: #473a2c;
   --text-soft: rgba(71, 58, 44, 0.72);
-  --card: rgba(255, 255, 255, 0.92);
+  --card: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 244, 224, 0.85)
+  );
   --ink: #2f2b27;
   --shadow: 0 20px 50px rgba(84, 59, 30, 0.15);
 }
@@ -18,6 +22,10 @@ html,
 body,
 #root {
   min-height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -55,7 +63,9 @@ h2 {
 .fade {
   opacity: 0;
   transform: translateY(38px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
 }
 
 .fade.show {
@@ -189,6 +199,7 @@ h2 {
 
 .glass {
   background: var(--card);
+  border: 1px solid rgba(182, 145, 97, 0.24);
   border-radius: 30px;
   padding: clamp(22px, 4.6vw, 50px);
   color: var(--ink);
@@ -208,8 +219,8 @@ h2 {
   padding: 22px 12px;
   border-radius: 22px;
   text-align: center;
-  background: rgba(255, 255, 255, 0.98);
-  border: 1px solid rgba(182, 145, 97, 0.24);
+  background: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(182, 145, 97, 0.34);
   overflow: visible;
   position: relative;
   z-index: 1;
@@ -264,8 +275,8 @@ h2 {
 .countdown {
   margin-top: 24px;
   text-align: center;
-  font-size: clamp(1rem, 2.6vw, 1.3rem);
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .event-grid {
@@ -278,8 +289,8 @@ h2 {
 .event-item {
   border-radius: 20px;
   padding: 18px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(182, 145, 97, 0.2);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(182, 145, 97, 0.32);
 }
 
 .event-time {
@@ -336,7 +347,10 @@ h2 {
   text-decoration: none;
   border: 1px solid transparent;
   font-weight: 600;
-  transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    opacity 0.22s ease;
 }
 
 .btn:hover {
@@ -462,7 +476,11 @@ footer {
 .bubble-c {
   border-radius: 999px;
   border: 1px solid rgba(149, 161, 180, 0.32);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.92), rgba(230, 238, 250, 0));
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.92),
+    rgba(230, 238, 250, 0)
+  );
   box-shadow: 0 8px 18px rgba(160, 174, 196, 0.12);
   animation: bubble-float 12s ease-in-out infinite;
 }
