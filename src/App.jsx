@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import dovePng from "./assets/dove_transparent_trimmed.png";
-import flowersPng from "./assets/flowers.png";
+import dovePng from "./assets/dove.webp";
+import flowersPng from "./assets/flowers.webp";
 import heartSvg from "./assets/heart.svg";
-import ringsPng from "./assets/rings.png";
+import ringsPng from "./assets/rings.webp";
 import scrollArrowSvg from "./assets/scroll-arrow.svg";
 import radisson from "./assets/radisson.webp";
 
