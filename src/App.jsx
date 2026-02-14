@@ -5,6 +5,7 @@ import heartSvg from "./assets/heart.svg";
 import ringsPng from "./assets/rings.webp";
 import scrollArrowSvg from "./assets/scroll-arrow.svg";
 import radisson from "./assets/radisson.webp";
+import mainPhoto from "./assets/main-photo.JPG";
 
 const WEDDING_DATE = new Date("2026-07-04T16:00:00+05:00");
 const WEEKDAYS = [
@@ -94,33 +95,39 @@ function App() {
                 <img className="float-shape png-dove png-dove-c" src={flowersPng} alt="" />
             </div>
 
-            <div className="hero-intro">
-                <section className="hero fade show">
-                    <div className="sparkles" aria-hidden="true">
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                    </div>
-                    <div className="hero-card">
-                        <h1>Элина & Чингиз</h1>
-                        <div className="gold-line" />
-                        <p className="subtitle">Свадебное приглашение</p>
-                        <p className="date-line">4 июля 2026 года · начало в 16:00</p>
-                    </div>
-                </section>
-                <h3 className="hero-appeal">Дорогие гости!</h3>
-                <p className="hero-note fade show">
-                    Приглашаем вас разделить с нами торжество, посвященное дню нашей свадьбы.
-                    Для нас будет огромной радостью провести этот счастливый день в кругу самых
-                    близких и дорогих людей.
-                </p>
+            <section className="hero-stage">
+                <div className="hero-photo-shell" aria-hidden="true">
+                    <img className="hero-photo" src={mainPhoto} alt="" />
+                </div>
 
-                <a className="scroll-hint" href="#details">
-                    <img src={scrollArrowSvg} alt="" aria-hidden="true" />
-                </a>
-            </div>
+                <div className="hero-intro">
+                    <section className="hero fade show">
+                        <div className="sparkles" aria-hidden="true">
+                            <span />
+                            <span />
+                            <span />
+                            <span />
+                            <span />
+                        </div>
+                        <div className="hero-card">
+                            <h1>Элина & Чингиз</h1>
+                            <div className="gold-line" />
+                            <p className="subtitle">Свадебное приглашение</p>
+                            <p className="date-line">4 июля 2026 года · начало в 16:00</p>
+                        </div>
+                    </section>
+                    <h3 className="hero-appeal">Дорогие гости!</h3>
+                    <p className="hero-note fade show">
+                        Приглашаем вас разделить с нами торжество, посвященное дню нашей свадьбы.
+                        Для нас будет огромной радостью провести этот счастливый день в кругу самых
+                        близких и дорогих людей.
+                    </p>
+
+                    <a className="scroll-hint" href="#details">
+                        <img src={scrollArrowSvg} alt="" aria-hidden="true" />
+                    </a>
+                </div>
+            </section>
 
             <section className="fade" id="details">
                 <div className="glass">
@@ -304,4 +311,3 @@ function App() {
 }
 
 export default App;
-
