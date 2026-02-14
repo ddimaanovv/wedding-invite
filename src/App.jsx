@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import dovePng from "./assets/dove.webp";
 import flowersPng from "./assets/flowers.webp";
 import heartSvg from "./assets/heart.svg";
@@ -42,7 +42,7 @@ function App() {
             const diff = WEDDING_DATE - now;
 
             if (diff <= 0) {
-                setCountdown("Сегодня наш день ❤");
+                setCountdown("Сегодня наш день ♥");
                 return;
             }
 
@@ -88,7 +88,7 @@ function App() {
                 <img className="float-shape heart-icon heart-e" src={heartSvg} alt="" />
                 <img className="float-shape heart-icon heart-f" src={heartSvg} alt="" />
                 <span className="float-shape glyph-star">✦</span>
-                <span className="float-shape glyph-ring">◌</span>
+                <span className="float-shape glyph-ring">◉</span>
                 <img className="float-shape png-dove" src={dovePng} alt="" />
                 <img className="float-shape png-dove png-dove-b" src={ringsPng} alt="" />
                 <img className="float-shape png-dove png-dove-c" src={flowersPng} alt="" />
@@ -112,9 +112,9 @@ function App() {
                 </section>
                 <h3 className="hero-appeal">Дорогие гости!</h3>
                 <p className="hero-note fade show">
-                    приглашаем вас разделить с нами торжество, посвященное
-                    дню нашей свадьбы. Для нас будет огромной радостью провести этот
-                    счастливый день в кругу самых близких и дорогих людей.
+                    Приглашаем вас разделить с нами торжество, посвященное дню нашей свадьбы.
+                    Для нас будет огромной радостью провести этот счастливый день в кругу самых
+                    близких и дорогих людей.
                 </p>
 
                 <a className="scroll-hint" href="#details">
@@ -147,7 +147,7 @@ function App() {
                         </article>
                     </div>
 
-                    <p className="countdown">{countdown}</p>
+                    <p className="details-text countdown">{countdown}</p>
                 </div>
             </section>
 
@@ -159,19 +159,19 @@ function App() {
                     <div className="event-grid">
                         <article className="event-item">
                             <div className="event-time">15:00</div>
-                            <p>Сбор гостей и welcome-зона.</p>
+                            <p className="details-text">Сбор гостей и welcome-зона.</p>
                         </article>
                         <article className="event-item">
                             <div className="event-time">16:00</div>
-                            <p>Торжественная церемония.</p>
+                            <p className="details-text">Торжественная церемония.</p>
                         </article>
                         <article className="event-item">
                             <div className="event-time">17:00</div>
-                            <p>Фотосессия, аперитив и поздравления.</p>
+                            <p className="details-text">Фотосессия, аперитив и поздравления.</p>
                         </article>
                         <article className="event-item">
                             <div className="event-time">18:30</div>
-                            <p>Банкет, танцы и праздничная программа.</p>
+                            <p className="details-text">Банкет, танцы и праздничная программа.</p>
                         </article>
                     </div>
                 </div>
@@ -183,15 +183,12 @@ function App() {
                     <div className="gold-line" />
 
                     <div className="location">
-                        <img
-                            src={radisson}
-                            alt="Светлый свадебный зал"
-                        />
+                        <img src={radisson} alt="Отель и свадебный зал" />
 
                         <div>
                             <h3>Radisson Blu</h3>
                             <h5>Москва, Ленинский проспект, 90/3</h5>
-                            <p>
+                            <p className="details-text">
                                 Пространство с панорамным светом, утонченным интерьером и уютной
                                 атмосферой для самого важного вечера.
                             </p>
@@ -211,9 +208,25 @@ function App() {
                 </div>
             </section>
 
+            <section className="fade">
+                <div className="glass details-card">
+                    <h2>Детали</h2>
+                    <div className="gold-line" />
+                    <p className="details-text">
+                        Свои тёплые слова и пожелания приносите в сердцах, а подарки - в
+                        конверте.
+                    </p>
+                    <p className="details-text">
+                        Вместо цветов мы будем счастливы получить бутылочку вина, которую
+                        вместе разделим однажды вечером.
+                    </p>
+                </div>
+            </section>
+
             <section className="fade" id="rsvp">
                 <div className="glass rsvp-card">
                     <h2>Подтверждение присутствия</h2>
+                    <div className="gold-line" />
                     <p>Пожалуйста, заполните анкету.</p>
 
                     <div className="form-embed">
@@ -231,9 +244,64 @@ function App() {
                 </div>
             </section>
 
-            <footer>С любовью, Элина и Чингиз ❤</footer>
+            <section className="fade contacts-section">
+                <div className="glass contacts-card">
+                    <h2>Контакты</h2>
+                    <div className="gold-line" />
+                    <p className="contacts-note">Если появятся вопросы, свяжитесь с нами:</p>
+
+                    <div className="contacts-list">
+                        <article className="contact-item">
+                            <p className="contact-person">Элина</p>
+                            <a className="contact-row contact-row-link" href="tel:+79687721707">
+                                <svg className="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path
+                                        d="M6.62 10.79a15.06 15.06 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.24 11.8 11.8 0 0 0 3.71.59 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.27a1 1 0 0 1 1 1 11.8 11.8 0 0 0 .59 3.71 1 1 0 0 1-.25 1.01z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                                <span className="contact-text">+7 968 772-17-07</span>
+                            </a>
+                            <a className="contact-row contact-row-link" href="tg://resolve?phone=79687721707">
+                                <svg className="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path
+                                        d="M9.04 15.47l-.38 5.35c.55 0 .79-.24 1.08-.53l2.59-2.47 5.37 3.93c.98.54 1.68.26 1.94-.91l3.52-16.47h0c.32-1.49-.54-2.08-1.49-1.73L1.16 10.54c-1.4.55-1.38 1.33-.24 1.68l5.24 1.63L18.33 6.2c.57-.37 1.09-.16.66.22"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                                <span className="contact-text contact-text-soft">Telegram</span>
+                            </a>
+                        </article>
+
+                        <article className="contact-item">
+                            <p className="contact-person">Чингиз</p>
+                            <a className="contact-row contact-row-link" href="tel:+79051687319">
+                                <svg className="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path
+                                        d="M6.62 10.79a15.06 15.06 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.24 11.8 11.8 0 0 0 3.71.59 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.27a1 1 0 0 1 1 1 11.8 11.8 0 0 0 .59 3.71 1 1 0 0 1-.25 1.01z"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                                <span className="contact-text">+7 905 168-73-19</span>
+                            </a>
+                            <a className="contact-row contact-row-link" href="tg://resolve?phone=79051687319">
+                                <svg className="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path
+                                        d="M9.04 15.47l-.38 5.35c.55 0 .79-.24 1.08-.53l2.59-2.47 5.37 3.93c.98.54 1.68.26 1.94-.91l3.52-16.47h0c.32-1.49-.54-2.08-1.49-1.73L1.16 10.54c-1.4.55-1.38 1.33-.24 1.68l5.24 1.63L18.33 6.2c.57-.37 1.09-.16.66.22"
+                                        fill="currentColor"
+                                    />
+                                </svg>
+                                <span className="contact-text contact-text-soft">Telegram</span>
+                            </a>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <footer>С любовью, Элина и Чингиз ♥</footer>
         </>
     );
 }
 
 export default App;
+
