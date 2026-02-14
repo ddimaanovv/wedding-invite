@@ -104,6 +104,8 @@ h2 {
   width: 50%;
   margin: 0 auto;
   position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f2ece3, #e6dbcc);
 }
 
 .hero-photo-shell::after {
@@ -124,6 +126,11 @@ h2 {
   object-fit: cover;
   object-position: center 35%;
   display: block;
+  opacity: 0;
+}
+
+.hero-photo.is-ready {
+  opacity: 1;
 }
 
 .hero-intro {

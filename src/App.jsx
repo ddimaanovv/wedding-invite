@@ -5,7 +5,7 @@ import heartSvg from "./assets/heart.svg";
 import ringsPng from "./assets/rings.webp";
 import scrollArrowSvg from "./assets/scroll-arrow.svg";
 import radisson from "./assets/radisson.webp";
-import mainPhoto from "./assets/main-photo.JPG";
+import mainPhoto from "./assets/main-photo.webp";
 
 const WEDDING_DATE = new Date("2026-07-04T16:00:00+05:00");
 const WEEKDAYS = [
@@ -20,6 +20,7 @@ const WEEKDAYS = [
 
 function App() {
     const [countdown, setCountdown] = useState("");
+    const [heroPhotoReady, setHeroPhotoReady] = useState(false);
 
     const calendar = useMemo(() => {
         const prev = new Date(WEDDING_DATE);
@@ -97,7 +98,15 @@ function App() {
 
             <section className="hero-stage">
                 <div className="hero-photo-shell" aria-hidden="true">
-                    <img className="hero-photo" src={mainPhoto} alt="" />
+                    <img
+                        className={`hero-photo ${heroPhotoReady ? "is-ready" : ""}`}
+                        src={mainPhoto}
+                        alt=""
+                        loading="eager"
+                        fetchPriority="high"
+                        decoding="async"
+                        onLoad={() => setHeroPhotoReady(true)}
+                    />
                 </div>
 
                 <div className="hero-intro">
