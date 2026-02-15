@@ -175,7 +175,7 @@ function App() {
                     <div className="event-grid">
                         <article className="event-item">
                             <div className="event-time">15:00</div>
-                            <p className="details-text">Сбор гостей в welcome-зоне, фуршет</p>
+                            <p className="details-text">Начало</p>
                         </article>
                         <article className="event-item">
                             <div className="event-time">16:00</div>
