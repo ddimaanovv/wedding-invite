@@ -7,7 +7,7 @@ import scrollArrowSvg from "./assets/scroll-arrow.svg";
 import radisson from "./assets/radisson.webp";
 import mainPhoto from "./assets/main-photo.webp";
 
-const WEDDING_DATE = new Date("2026-07-04T16:00:00+05:00");
+const WEDDING_DATE = new Date("2026-07-04T15:00:00+03:00");
 const WEEKDAYS = [
     "Воскресенье",
     "Понедельник",
@@ -122,7 +122,7 @@ function App() {
                             <h1>Элина & Чингиз</h1>
                             <div className="gold-line" />
                             <p className="subtitle">Свадебное приглашение</p>
-                            <p className="date-line">4 июля 2026 года · начало в 16:00</p>
+                            <p className="date-line">4 июля 2026 года · начало в 15:00</p>
                         </div>
                     </section>
                     <h3 className="hero-appeal">Дорогие гости!</h3>
@@ -175,7 +175,7 @@ function App() {
                     <div className="event-grid">
                         <article className="event-item">
                             <div className="event-time">15:00</div>
-                            <p className="details-text">Начало</p>
+                            <p className="details-text">Сбор гостей в welcome-зоне, фуршет</p>
                         </article>
                         <article className="event-item">
                             <div className="event-time">16:00</div>
