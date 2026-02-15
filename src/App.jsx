@@ -129,7 +129,7 @@ function App() {
                     <p className="hero-note fade show">
                         Приглашаем вас разделить с нами торжество, посвященное дню нашей свадьбы.
                         Для нас будет огромной радостью провести этот счастливый день в кругу самых
-                        близких и дорогих людей.
+                        близких и дорогих людей
                     </p>
 
                     <a className="scroll-hint" href="#details">
@@ -175,19 +175,31 @@ function App() {
                     <div className="event-grid">
                         <article className="event-item">
                             <div className="event-time">15:00</div>
-                            <p className="details-text">Сбор гостей и welcome-зона.</p>
+                            <p className="details-text">Сбор гостей в welcome-зоне, фуршет</p>
                         </article>
                         <article className="event-item">
                             <div className="event-time">16:00</div>
-                            <p className="details-text">Торжественная церемония.</p>
+                            <p className="details-text">Начало торжества, аперитив</p>
                         </article>
                         <article className="event-item">
                             <div className="event-time">17:00</div>
-                            <p className="details-text">Фотосессия, аперитив и поздравления.</p>
+                            <p className="details-text">Банкет, поздравления</p>
                         </article>
                         <article className="event-item">
-                            <div className="event-time">18:30</div>
-                            <p className="details-text">Банкет, танцы и праздничная программа.</p>
+                            <div className="event-time">18:00</div>
+                            <p className="details-text">Праздничная программа</p>
+                        </article>
+                        <article className="event-item">
+                            <div className="event-time">20:00</div>
+                            <p className="details-text">Вынос торта</p>
+                        </article>
+                        <article className="event-item">
+                            <div className="event-time">21:00</div>
+                            <p className="details-text">Танцы</p>
+                        </article>
+                        <article className="event-item">
+                            <div className="event-time">23:00</div>
+                            <p className="details-text">Финал</p>
                         </article>
                     </div>
                 </div>
@@ -206,7 +218,7 @@ function App() {
                             <h5>Москва, Ленинский проспект, 90/3</h5>
                             <p className="details-text">
                                 Пространство с панорамным светом, утонченным интерьером и уютной
-                                атмосферой для самого важного вечера.
+                                атмосферой для самого важного вечера
                             </p>
 
                             <div className="actions">
@@ -230,11 +242,11 @@ function App() {
                     <div className="gold-line" />
                     <p className="details-text">
                         Свои тёплые слова и пожелания приносите в сердцах, а подарки - в
-                        конверте.
+                        конверте
                     </p>
                     <p className="details-text">
                         Вместо цветов мы будем счастливы получить бутылочку вина, которую
-                        вместе разделим однажды вечером.
+                        вместе разделим однажды вечером
                     </p>
                 </div>
             </section>
@@ -243,16 +255,13 @@ function App() {
                 <div className="glass rsvp-card">
                     <h2>Подтверждение присутствия</h2>
                     <div className="gold-line" />
-                    <p>Пожалуйста, заполните анкету.</p>
+                    <p>Пожалуйста, заполните анкету</p>
 
                     <div className="form-embed">
                         <iframe
                             src="https://docs.google.com/forms/d/e/1FAIpQLSemB8X_gfYfUSeONNIgKcI6ksC4CQaQ74gcuJgFltSvPQKGGA/viewform?embedded=true"
                             width="640"
-                            height="720"
-                            frameBorder="0"
-                            marginHeight="0"
-                            marginWidth="0"
+                            height="1220"
                         >
                             Загрузка...
                         </iframe>
