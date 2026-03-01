@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useRef, useState } from "react";
+﻿import { startTransition, useEffect, useRef, useState } from "react";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import {
   addDoc,
@@ -12,7 +12,11 @@ import heartSvg from "./assets/heart.svg";
 import ringsPng from "./assets/rings.webp";
 import scrollArrowSvg from "./assets/scroll-arrow.svg";
 import radisson from "./assets/radisson.webp";
-import mainPhoto from "./assets/main-photo.webp";
+import mainPhoto1 from "./assets/main-photo-1.png";
+import mainPhoto2 from "./assets/main-photo-2.avif";
+import mainPhoto3 from "./assets/main-photo-3.png";
+import mainPhoto4 from "./assets/main-photo-4.avif";
+import mainPhoto5 from "./assets/main-photo-5.png";
 import {
   DEFAULT_VARIANT_KEY,
   WEDDING_VARIANTS,
@@ -41,16 +45,16 @@ const PROGRAM_ITEMS = [
 ];
 const CONTACTS = [
   {
-    name: "Чингиз",
-    phone: "+7 905 168-73-19",
-    tel: "tel:+79051687319",
-    telegram: "tg://resolve?phone=79051687319",
+    name: "Михаил",
+    phone: "+7 777 777-77-77",
+    tel: "tel:+77777777777",
+    telegram: "tg://resolve?phone=77777777777",
   },
   {
-    name: "Элина",
-    phone: "+7 968 772-17-07",
-    tel: "tel:+79687721707",
-    telegram: "tg://resolve?phone=79687721707",
+    name: "София",
+    phone: "+7 888 888-88-88",
+    tel: "tel:+78888888888",
+    telegram: "tg://resolve?phone=78888888888",
   },
 ];
 
@@ -82,6 +86,37 @@ const INITIAL_FORM_STATE = {
   guestName: "",
   alcohol: [],
   alcoholOther: "",
+};
+
+const AMBIENT_TWINKLE_STARS = [
+  "large",
+  "small",
+  "",
+  "small",
+  "",
+  "small",
+  "large",
+  "small",
+  "",
+  "small",
+  "",
+  "small",
+  "large",
+  "",
+  "small",
+  "",
+  "small",
+  "large",
+  "",
+  "small",
+];
+
+const HERO_PHOTOS_BY_VARIANT = {
+  classic: mainPhoto1,
+  warm: mainPhoto2,
+  modern: mainPhoto3,
+  minimal: mainPhoto4,
+  scenic: mainPhoto5,
 };
 
 const CALENDAR = createCalendarData(WEDDING_DATE);
@@ -134,6 +169,19 @@ function updateMeta(variant) {
   }
 }
 
+function syncDocumentBackground(variant) {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  const pageBackground = variant.theme["--page-background"];
+  const fallbackBackground =
+    pageBackground && pageBackground !== "transparent" ? pageBackground : "#ffffff";
+
+  document.documentElement.style.background = fallbackBackground;
+  document.body.style.background = fallbackBackground;
+}
+
 function App() {
   const [activeVariantKey, setActiveVariantKey] = useState(() =>
     getVariantKeyFromLocation(),
@@ -146,6 +194,66 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const rsvpSectionRef = useRef(null);
   const activeVariant = getWeddingVariant(activeVariantKey);
+  const activeHeroPhoto = HERO_PHOTOS_BY_VARIANT[activeVariant.key] ?? mainPhoto1;
+  const shouldHideHeroPhoto =
+    activeVariant.key === "minimal" || activeVariant.key === "scenic";
+
+
+  useEffect(() => {
+    if (typeof window === "undefined" || shouldHideHeroPhoto) {
+      setHeroPhotoReady(false);
+      return undefined;
+    }
+
+    let cancelled = false;
+    setHeroPhotoReady(false);
+
+    const image = new window.Image();
+    const handleReady = () => {
+      if (!cancelled) {
+        setHeroPhotoReady(true);
+      }
+    };
+
+    image.onload = handleReady;
+    image.onerror = handleReady;
+    image.src = activeHeroPhoto;
+
+    if (image.complete) {
+      handleReady();
+    }
+
+    return () => {
+      cancelled = true;
+      image.onload = null;
+      image.onerror = null;
+    };
+  }, [activeHeroPhoto, shouldHideHeroPhoto]);
+
+  const revealVisibleFadeNodes = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const viewportHeight = window.innerHeight || 0;
+    const fadeNodes = Array.from(document.querySelectorAll(".fade"));
+
+    fadeNodes.forEach((node) => {
+      if (node.classList.contains("show")) {
+        return;
+      }
+
+      const rect = node.getBoundingClientRect();
+      const visibleTop = Math.max(rect.top, 0);
+      const visibleBottom = Math.min(rect.bottom, viewportHeight);
+      const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+      const visibleRatio = rect.height > 0 ? visibleHeight / rect.height : 0;
+
+      if (visibleRatio >= 0.18) {
+        node.classList.add("show");
+      }
+    });
+  };
 
   useEffect(() => {
     const updateCountdown = () => {
@@ -171,25 +279,67 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const fadeNodes = Array.from(document.querySelectorAll(".fade"));
+    let observer;
+
+    const revealNode = (node) => {
+      if (node.classList.contains("show")) {
+        return;
+      }
+
+      node.classList.add("show");
+      observer?.unobserve(node);
+    };
+
+    observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("show");
+            revealNode(entry.target);
           }
         });
       },
       { threshold: 0.18 },
     );
 
-    const fadeNodes = document.querySelectorAll(".fade");
     fadeNodes.forEach((node) => observer.observe(node));
+    const rafId = window.requestAnimationFrame(revealVisibleFadeNodes);
+    const timeoutIds = [240, 900, 1600].map((delay) =>
+      window.setTimeout(revealVisibleFadeNodes, delay),
+    );
+
+    window.addEventListener("load", revealVisibleFadeNodes);
+    window.addEventListener("pageshow", revealVisibleFadeNodes);
+    window.addEventListener("resize", revealVisibleFadeNodes);
 
     return () => {
+      window.cancelAnimationFrame(rafId);
+      timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      window.removeEventListener("load", revealVisibleFadeNodes);
+      window.removeEventListener("pageshow", revealVisibleFadeNodes);
+      window.removeEventListener("resize", revealVisibleFadeNodes);
       fadeNodes.forEach((node) => observer.unobserve(node));
       observer.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (!heroPhotoReady) {
+      return undefined;
+    }
+
+    const rafId = window.requestAnimationFrame(revealVisibleFadeNodes);
+    const timeoutId = window.setTimeout(revealVisibleFadeNodes, 180);
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.clearTimeout(timeoutId);
+    };
+  }, [heroPhotoReady]);
 
   useEffect(() => {
     if (submitStatus !== "success" || !rsvpSectionRef.current) {
@@ -203,6 +353,25 @@ function App() {
       });
     });
   }, [submitStatus]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const handlePopstate = () => {
+      setActiveVariantKey(getVariantKeyFromLocation());
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+    return () => window.removeEventListener("popstate", handlePopstate);
+  }, []);
+
+  useEffect(() => {
+    syncVariantInLocation(activeVariant.key);
+    updateMeta(activeVariant);
+    syncDocumentBackground(activeVariant);
+  }, [activeVariant]);
 
 
   const handleInputChange = (event) => {
@@ -289,16 +458,79 @@ function App() {
   };
 
   return (
-    <div
-      className="page-shell"
-    >
+    <div className={`page-shell theme-${activeVariant.scene}`} style={activeVariant.theme}>
       <div className="ambient-bg" aria-hidden="true">
+        <span className="ambient-layer ambient-wash" />
+        <span className="ambient-layer ambient-veil" />
+        <span className="ambient-layer ambient-velvet" />
+        <span className="ambient-layer ambient-aurora" />
+        <span className="ambient-layer ambient-sweep" />
+        <span className="ambient-layer ambient-vignette" />
+        <span className="ambient-arc" />
+        <span className="ambient-frame" />
+        <span className="ambient-starfield" />
         <span className="ambient-orb ambient-orb-a" />
         <span className="ambient-orb ambient-orb-b" />
         <span className="ambient-orb ambient-orb-c" />
         <span className="ambient-orb ambient-orb-d" />
         <span className="ambient-line ambient-line-a" />
         <span className="ambient-line ambient-line-b" />
+        <span className="ambient-ring ambient-ring-a" />
+        <span className="ambient-ring ambient-ring-b" />
+        <span className="ambient-ring ambient-ring-c" />
+        <span className="ambient-streak ambient-streak-a" />
+        <span className="ambient-streak ambient-streak-b" />
+        <span className="ambient-streak ambient-streak-c" />
+        <div className="ambient-petals" aria-hidden="true">
+          {Array.from({ length: 14 }, (_, petalIndex) => (
+            <span className="ambient-petal" key={`petal-${petalIndex}`}>
+              <svg viewBox="0 0 100 140" role="presentation" focusable="false">
+                <defs>
+                  <linearGradient
+                    id={`petal-gradient-${petalIndex}`}
+                    x1="18%"
+                    y1="10%"
+                    x2="82%"
+                    y2="92%"
+                  >
+                    <stop offset="0%" stopColor="#fff7f8" stopOpacity="0.24" />
+                    <stop offset="30%" stopColor="#ff5b5f" stopOpacity="0.96" />
+                    <stop offset="72%" stopColor="#c21544" stopOpacity="0.88" />
+                    <stop offset="100%" stopColor="#5c0010" stopOpacity="0.18" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M50 8C82 2 95 50 50 132C5 50 18 2 50 8Z"
+                  fill={`url(#petal-gradient-${petalIndex})`}
+                />
+                <path
+                  d="M50 24C52 56 50 86 48 114"
+                  stroke="rgba(255, 235, 235, 0.78)"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                />
+                <ellipse
+                  cx="40"
+                  cy="36"
+                  rx="9"
+                  ry="13"
+                  fill="rgba(255, 255, 255, 0.2)"
+                  transform="rotate(-18 40 36)"
+                />
+              </svg>
+            </span>
+          ))}
+        </div>
+        <div className="ambient-glints" aria-hidden="true">
+          {AMBIENT_TWINKLE_STARS.map((size, index) => (
+            <span
+              className={size ? `ambient-twinkle-star ${size}` : "ambient-twinkle-star"}
+              key={`twinkle-${index}`}
+            >
+              <span className="ambient-twinkle-core" />
+            </span>
+          ))}
+        </div>
         <img className="float-shape ambient-heart heart-a" src={heartSvg} alt="" />
         <img className="float-shape ambient-heart heart-b" src={heartSvg} alt="" />
         <img className="float-shape ambient-heart heart-c" src={heartSvg} alt="" />
@@ -309,16 +541,23 @@ function App() {
       </div>
 
       <section className="hero-stage">
-        <div className="hero-photo-shell" aria-hidden="true">
-          <img
-            className={`hero-photo ${heroPhotoReady ? "is-ready" : ""}`}
-            src={mainPhoto}
-            alt=""
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-            onLoad={() => setHeroPhotoReady(true)}
-          />
+        <div
+          className={`hero-photo-shell ${
+            shouldHideHeroPhoto ? "is-placeholder" : ""
+          }`}
+          aria-hidden="true"
+        >
+          {!shouldHideHeroPhoto ? (
+            <img
+              className={`hero-photo ${heroPhotoReady ? "is-ready" : ""}`}
+              src={activeHeroPhoto}
+              alt=""
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              onLoad={() => setHeroPhotoReady(true)}
+            />
+          ) : null}
         </div>
 
         <div className="hero-intro">
@@ -331,20 +570,23 @@ function App() {
               <span />
             </div>
             <div className="hero-card">
-              <p className="hero-kicker">{activeVariant.hero.kicker}</p>
-              <h1>Чингиз & Элина</h1>
+              <h1>Михаил & София</h1>
               <div className="gold-line" />
               <p className="subtitle">{activeVariant.hero.subtitle}</p>
               <p className="date-line">4 июля 2026 года · начало в 15:00</p>
             </div>
           </section>
 
-          <h3 className="hero-appeal">{activeVariant.hero.appeal}</h3>
-          <p className="hero-note fade show">{activeVariant.hero.note}</p>
-
-          <a className="scroll-hint" href="#details">
+          <a className="scroll-hint" href="#hero-message">
             <img src={scrollArrowSvg} alt="" aria-hidden="true" />
           </a>
+        </div>
+      </section>
+
+      <section className="fade" id="hero-message">
+        <div className="glass hero-message-card">
+          <h3 className="hero-appeal">{activeVariant.hero.appeal}</h3>
+          <p className="hero-note">{activeVariant.hero.note}</p>
         </div>
       </section>
 
@@ -637,14 +879,13 @@ function App() {
       </section>
       <section className="variant-dock-shell">
         <div className="variant-dock">
-          <p className="variant-dock-title">Вариант текста</p>
 
           <div
             className="variant-switcher"
             role="group"
             aria-label="Варианты текста приглашения"
           >
-            {WEDDING_VARIANTS.map((variant) => (
+            {WEDDING_VARIANTS.map((variant, index) => (
               <button
                 key={variant.key}
                 type="button"
@@ -654,7 +895,7 @@ function App() {
                 onClick={() => handleVariantChange(variant.key)}
                 aria-pressed={variant.key === activeVariant.key}
               >
-                <span className="variant-pill-title">{variant.label}</span>
+                <span className="variant-pill-title">{`Вариант ${index + 1}`}</span>
               </button>
             ))}
           </div>
@@ -671,7 +912,11 @@ function App() {
           </div>
         </div>
       </section>
-      <footer>{activeVariant.footer} {"\u2665"}</footer>
+      <section className="fade footer-section">
+        <div className="glass footer-card">
+          <p className="footer-text">{activeVariant.footer} {"\u2665"}</p>
+        </div>
+      </section>
     </div>
   );
 }
@@ -699,6 +944,9 @@ function TelegramIcon() {
 }
 
 export default App;
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-﻿const sharedTheme = {
+﻿const baseTheme = {
   "--hero-photo-position": "center 34%",
   "--hero-photo-width": "42rem",
   "--hero-photo-radius": "0 0 42px 42px",
@@ -6,8 +6,89 @@
   "--button-radius": "999px",
   "--display-font": '"Playfair Display", serif',
   "--body-font": '"Inter", sans-serif',
+};
+
+const bloomTheme = {
+  ...baseTheme,
   "--page-background":
-    "radial-gradient(circle at top, #fffaf3 0%, #f4ebe0 42%, #eadccd 100%)",
+    "linear-gradient(140deg, #fffafc, #f8eef4 46%, #f4eefb)",
+  "--surface":
+    "linear-gradient(140deg, rgba(255, 255, 255, 0.92), rgba(255, 247, 252, 0.84))",
+  "--surface-strong": "rgba(255, 255, 255, 0.9)",
+  "--border": "rgba(188, 154, 171, 0.22)",
+  "--accent": "#c79a63",
+  "--accent-strong": "#9a7146",
+  "--text-main": "#443124",
+  "--text-soft": "rgba(68, 49, 36, 0.76)",
+  "--text-muted": "rgba(68, 49, 36, 0.56)",
+  "--button-text": "#fffaf4",
+  "--shadow": "0 26px 70px rgba(122, 88, 107, 0.16)",
+  "--hero-shell-bg": "linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(247, 233, 241, 0.88))",
+  "--hero-overlay":
+    "linear-gradient(to bottom, rgba(46, 33, 41, 0.04), rgba(46, 33, 41, 0.18) 60%, rgba(255, 255, 255, 0.08) 100%)",
+  "--photo-filter": "saturate(0.96) contrast(1.01)",
+  "--sparkle-color": "rgba(255, 248, 236, 0.94)",
+  "--dock-bg": "rgba(255, 249, 245, 0.82)",
+  "--chip-bg": "rgba(255, 255, 255, 0.72)",
+  "--chip-border": "rgba(188, 154, 171, 0.16)",
+  "--footer-color": "#7a6448",
+};
+
+const velvetTheme = {
+  ...baseTheme,
+  "--page-background":
+    "radial-gradient(circle at 18% 18%, rgba(58, 30, 48, 0.24), transparent 24%), radial-gradient(circle at 82% 20%, rgba(74, 41, 29, 0.18), transparent 20%), radial-gradient(circle at 50% 78%, rgba(44, 18, 34, 0.2), transparent 28%), linear-gradient(145deg, #09070b, #120d14 42%, #1a1017)",
+  "--surface":
+    "linear-gradient(145deg, rgba(22, 16, 24, 0.82), rgba(13, 10, 15, 0.66))",
+  "--surface-strong": "rgba(16, 12, 17, 0.78)",
+  "--border": "rgba(244, 212, 149, 0.18)",
+  "--accent": "#c79a63",
+  "--accent-strong": "#9a7146",
+  "--text-main": "#f7efe6",
+  "--text-soft": "rgba(247, 239, 230, 0.74)",
+  "--text-muted": "rgba(247, 239, 230, 0.56)",
+  "--button-text": "#100c11",
+  "--shadow": "0 28px 80px rgba(0, 0, 0, 0.46)",
+  "--hero-shell-bg": "linear-gradient(145deg, rgba(22, 16, 24, 0.88), rgba(13, 10, 15, 0.74))",
+  "--hero-overlay":
+    "linear-gradient(to bottom, rgba(7, 5, 8, 0.18), rgba(7, 5, 8, 0.42) 64%, rgba(7, 5, 8, 0.22) 100%)",
+  "--photo-filter": "saturate(0.88) brightness(0.86)",
+  "--sparkle-color": "rgba(255, 244, 224, 0.92)",
+  "--dock-bg": "rgba(16, 12, 17, 0.8)",
+  "--chip-bg": "rgba(255, 255, 255, 0.04)",
+  "--chip-border": "rgba(244, 212, 149, 0.18)",
+  "--footer-color": "#e7d5b3",
+};
+
+const celestialTheme = {
+  ...baseTheme,
+  "--page-background":
+    "linear-gradient(180deg, rgba(250, 246, 239, 0.24), rgba(243, 235, 224, 0.12))",
+  "--surface":
+    "linear-gradient(155deg, rgba(255, 251, 245, 0.88), rgba(248, 241, 231, 0.82) 54%, rgba(255, 249, 242, 0.9))",
+  "--surface-strong": "rgba(255, 249, 242, 0.9)",
+  "--border": "rgba(191, 154, 92, 0.24)",
+  "--accent": "#c79a63",
+  "--accent-strong": "#9a7146",
+  "--text-main": "#443124",
+  "--text-soft": "rgba(68, 49, 36, 0.76)",
+  "--text-muted": "rgba(68, 49, 36, 0.56)",
+  "--button-text": "#fffaf2",
+  "--shadow": "0 24px 56px rgba(30, 19, 10, 0.16)",
+  "--hero-shell-bg": "linear-gradient(155deg, rgba(255, 251, 245, 0.9), rgba(244, 236, 225, 0.84) 54%, rgba(255, 248, 239, 0.92))",
+  "--hero-overlay":
+    "linear-gradient(to bottom, rgba(28, 20, 13, 0.08), rgba(28, 20, 13, 0.18) 64%, rgba(255, 255, 255, 0.06) 100%)",
+  "--photo-filter": "saturate(0.94) brightness(0.94)",
+  "--sparkle-color": "rgba(255, 245, 228, 0.94)",
+  "--dock-bg": "rgba(255, 249, 242, 0.78)",
+  "--chip-bg": "rgba(255, 255, 255, 0.64)",
+  "--chip-border": "rgba(191, 154, 92, 0.18)",
+  "--footer-color": "#7a6448",
+};
+
+const softTheme = {
+  ...baseTheme,
+  "--page-background": "transparent",
   "--surface":
     "linear-gradient(140deg, rgba(255, 255, 255, 0.92), rgba(255, 247, 237, 0.84))",
   "--surface-strong": "rgba(255, 255, 255, 0.94)",
@@ -23,10 +104,6 @@
   "--hero-overlay":
     "linear-gradient(to bottom, rgba(28, 20, 13, 0.08), rgba(28, 20, 13, 0.24) 60%, rgba(255, 255, 255, 0.1) 100%)",
   "--photo-filter": "saturate(0.96) contrast(1.02)",
-  "--ambient-a": "rgba(255, 244, 228, 0.88)",
-  "--ambient-b": "rgba(236, 214, 186, 0.72)",
-  "--ambient-c": "rgba(255, 255, 255, 0.68)",
-  "--line-color": "rgba(166, 131, 93, 0.16)",
   "--sparkle-color": "rgba(255, 250, 242, 0.94)",
   "--dock-bg": "rgba(255, 250, 243, 0.84)",
   "--chip-bg": "rgba(255, 255, 255, 0.72)",
@@ -34,119 +111,91 @@
   "--footer-color": "#7a6448",
 };
 
+const scenicTheme = {
+  ...softTheme,
+  "--page-background": "#ece1d3",
+  "--surface": "linear-gradient(140deg, rgba(255, 255, 255, 0.86), rgba(247, 241, 232, 0.8))",
+  "--surface-strong": "rgba(255, 255, 255, 0.88)",
+  "--border": "rgba(159, 127, 88, 0.24)",
+  "--accent": "#c79a63",
+  "--accent-strong": "#9a7146",
+  "--text-main": "#443124",
+  "--text-soft": "rgba(68, 49, 36, 0.76)",
+  "--text-muted": "rgba(68, 49, 36, 0.56)",
+  "--shadow": "0 24px 60px rgba(55, 33, 13, 0.18)",
+  "--hero-shell-bg": "linear-gradient(135deg, rgba(255, 248, 240, 0.82), rgba(231, 218, 201, 0.84))",
+  "--hero-overlay": "linear-gradient(to bottom, rgba(28, 20, 13, 0.14), rgba(28, 20, 13, 0.3) 60%, rgba(255, 255, 255, 0.06) 100%)",
+  "--photo-filter": "saturate(0.98) contrast(1.02)",
+  "--dock-bg": "rgba(255, 248, 240, 0.78)",
+  "--chip-bg": "rgba(255, 255, 255, 0.64)",
+  "--chip-border": "rgba(159, 127, 88, 0.18)",
+  "--footer-color": "#7a6448",
+};
+
 export const DEFAULT_VARIANT_KEY = "classic";
+
+const sharedContent = {
+  preview: "Спокойный, торжественный текст",
+  meta: {
+    title: "Михаил & София — свадебное приглашение",
+    description:
+      "Свадебное приглашение Михаила и Софии на 4 июля 2026 года.",
+  },
+  hero: {
+    kicker: "Классический вечер",
+    subtitle: "Свадебное приглашение",
+    appeal: "Дорогие гости!",
+    note:
+      "Приглашаем вас разделить с нами торжество, посвященное дню нашей свадьбы. Для нас будет огромной радостью провести этот счастливый день в кругу самых близких и дорогих людей.",
+  },
+  venueDescription:
+    "Светлый зал с панорамным светом, деликатным интерьером и атмосферой спокойного праздничного вечера.",
+  details: [
+    "Свои теплые слова и пожелания приносите в сердцах, а подарки, если захотите, можно подготовить в конверте.",
+    "Вместо цветов мы будем рады бутылочке вина, которую однажды с удовольствием откроем и вспомним этот день.",
+  ],
+  rsvpIntro: "Пожалуйста, заполните анкету ниже.",
+  contactsNote: "Если появятся вопросы, свяжитесь с нами:",
+  footer: "С любовью, Михаил и София",
+};
 
 export const WEDDING_VARIANTS = [
   {
     key: "classic",
+    scene: "soft",
     label: "Классический",
-    preview: "Спокойный, торжественный текст",
-    meta: {
-      title: "Чингиз & Элина — свадебное приглашение",
-      description:
-        "Классический текст свадебного приглашения Чингиза и Элины на 4 июля 2026 года.",
-    },
-    hero: {
-      kicker: "Классический вечер",
-      subtitle: "Свадебное приглашение",
-      appeal: "Дорогие гости!",
-      note:
-        "Приглашаем вас разделить с нами торжество, посвященное дню нашей свадьбы. Для нас будет огромной радостью провести этот счастливый день в кругу самых близких и дорогих людей.",
-    },
-    venueDescription:
-      "Светлый зал с панорамным светом, деликатным интерьером и атмосферой спокойного праздничного вечера.",
-    details: [
-      "Свои теплые слова и пожелания приносите в сердцах, а подарки, если захотите, можно подготовить в конверте.",
-      "Вместо цветов мы будем рады бутылочке вина, которую однажды с удовольствием откроем и вспомним этот день.",
-    ],
-    rsvpIntro: "Пожалуйста, заполните анкету ниже.",
-    contactsNote: "Если появятся вопросы, свяжитесь с нами:",
-    footer: "С любовью, Чингиз и Элина",
-    theme: sharedTheme,
+    ...sharedContent,
+    theme: softTheme,
   },
   {
     key: "warm",
+    scene: "bloom",
     label: "Теплый",
-    preview: "Более душевный и мягкий текст",
-    meta: {
-      title: "Чингиз & Элина — теплый текст приглашения",
-      description:
-        "Теплый текст свадебного приглашения Чингиза и Элины на 4 июля 2026 года.",
-    },
-    hero: {
-      kicker: "Наш летний день",
-      subtitle: "Приглашение на свадьбу",
-      appeal: "Будем счастливы видеть вас рядом",
-      note:
-        "Нам очень хочется провести этот день в окружении людей, которые для нас по-настоящему важны. Будем счастливы, если вы разделите с нами радость, улыбки и теплые воспоминания этого вечера.",
-    },
-    venueDescription:
-      "Пространство с мягким светом и уютной атмосферой, где хочется просто быть рядом, смеяться и проживать этот день вместе.",
-    details: [
-      "Главное для нас — ваше присутствие, поддержка и настроение. Если захотите подготовить подарок, самым удобным форматом для нас будет конверт.",
-      "Если захотите заменить цветы чем-то более долговечным, будем рады бутылочке вина для нашей будущей коллекции приятных вечеров.",
-    ],
-    rsvpIntro: "Пожалуйста, оставьте свой ответ в анкете ниже.",
-    contactsNote: "Если захотите что-то уточнить, просто напишите или позвоните нам:",
-    footer: "До скорой встречи, Чингиз и Элина",
-    theme: sharedTheme,
+    ...sharedContent,
+    theme: bloomTheme,
   },
   {
     key: "modern",
+    scene: "velvet",
     label: "Современный",
-    preview: "Более лаконичный и уверенный текст",
-    meta: {
-      title: "Чингиз & Элина — современный текст приглашения",
-      description:
-        "Современный текст свадебного приглашения Чингиза и Элины на 4 июля 2026 года.",
-    },
-    hero: {
-      kicker: "Наша история",
-      subtitle: "Приглашение на свадебный вечер",
-      appeal: "Хотим провести этот день вместе с вами",
-      note:
-        "Мы собираем красивый вечер, наполненный светом, музыкой и самыми близкими людьми. Будем рады, если вы станете частью этого дня и разделите его вместе с нами.",
-    },
-    venueDescription:
-      "Лаконичное и светлое пространство, в котором все внимание остается на атмосфере вечера, людях рядом и самом важном моменте.",
-    details: [
-      "Лучший подарок для нас — ваше присутствие в этот день. Если вам ближе практичный формат, можно подготовить подарок в конверте.",
-      "Вместо цветов можно принести бутылку вина: однажды мы откроем ее и снова вспомним этот вечер.",
-    ],
-    rsvpIntro: "Оставьте, пожалуйста, ответ в анкете.",
-    contactsNote: "По всем организационным вопросам мы на связи:",
-    footer: "С любовью, Чингиз и Элина",
-    theme: sharedTheme,
+    ...sharedContent,
+    theme: velvetTheme,
   },
   {
     key: "minimal",
+    scene: "celestial",
     label: "Сдержанный",
-    preview: "Чистый, короткий, минимальный текст",
-    meta: {
-      title: "Чингиз & Элина — сдержанный текст приглашения",
-      description:
-        "Сдержанный текст свадебного приглашения Чингиза и Элины на 4 июля 2026 года.",
-    },
-    hero: {
-      kicker: "4 июля 2026",
-      subtitle: "Приглашение",
-      appeal: "Будем рады видеть вас в этот день рядом с нами",
-      note:
-        "В этот день мы скажем друг другу «да» и будем счастливы разделить его с близкими людьми. Приходите провести этот вечер вместе с нами.",
-    },
-    venueDescription:
-      "Спокойное светлое пространство для красивого вечера, в котором главное — люди, эмоции и сам момент.",
-    details: [
-      "Для нас самое важное — ваше присутствие. Если захотите подготовить подарок, удобнее всего сделать это в формате конверта.",
-      "Букет можно заменить бутылкой вина: позже мы откроем ее и с теплом вспомним этот день.",
-    ],
-    rsvpIntro: "Пожалуйста, заполните форму ниже.",
-    contactsNote: "Если возникнут вопросы, свяжитесь с нами удобным способом:",
-    footer: "Чингиз и Элина",
-    theme: sharedTheme,
+    ...sharedContent,
+    theme: celestialTheme,
+  },
+  {
+    key: "scenic",
+    scene: "scenic",
+    label: "Пятый",
+    ...sharedContent,
+    theme: scenicTheme,
   },
 ];
-
 const variantsByKey = Object.fromEntries(
   WEDDING_VARIANTS.map((variant) => [variant.key, variant]),
 );
