@@ -554,6 +554,207 @@ h2 {
   font-size: clamp(2rem, 5vw, 3.3rem);
 }
 
+.date-showcase {
+  margin-top: 24px;
+}
+
+.date-showcase-simple,
+.date-showcase-editorial,
+.date-showcase-month,
+.date-showcase-emblem {
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--panel-radius) - 8px);
+}
+
+.date-showcase-simple {
+  display: grid;
+  grid-template-columns: minmax(128px, 164px) 1fr;
+  gap: 22px;
+  align-items: center;
+  padding: 24px;
+}
+
+.date-simple-day,
+.date-editorial-day,
+.date-emblem-day {
+  font-family: var(--display-font);
+  line-height: 0.9;
+  color: var(--accent-strong);
+}
+
+.date-simple-day {
+  font-size: clamp(3.4rem, 8vw, 5.4rem);
+  text-align: center;
+}
+
+.date-simple-copy,
+.date-emblem-copy {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+
+.date-eyebrow {
+  margin: 0;
+  color: var(--accent-strong);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+}
+
+.date-main {
+  margin: 0;
+  font-family: var(--display-font);
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  line-height: 1;
+  color: var(--text-main);
+}
+
+.date-sub {
+  margin: 0;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.9rem;
+}
+
+.date-showcase-editorial {
+  display: flex;
+  justify-content: center;
+  padding: 26px 30px;
+}
+
+.date-editorial-stack {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.date-editorial-kicker {
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.76rem;
+}
+
+.date-editorial-meta {
+  font-family: var(--display-font);
+  font-size: clamp(1.3rem, 3vw, 1.85rem);
+  color: var(--text-main);
+}
+
+.date-editorial-day {
+  font-size: clamp(4rem, 9vw, 6rem);
+}
+
+.date-showcase-month {
+  padding: 22px;
+}
+
+.date-month-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.date-month-title {
+  font-family: var(--display-font);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  color: var(--text-main);
+}
+
+.date-month-meta {
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+}
+
+.date-month-weekdays,
+.date-month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.date-month-weekdays {
+  margin-top: 18px;
+  gap: 8px;
+}
+
+.date-month-weekdays span {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.date-month-grid {
+  margin-top: 10px;
+  gap: 8px;
+}
+
+.date-month-cell {
+  min-height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--border) 56%, white);
+  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.date-month-cell.is-empty {
+  opacity: 0.18;
+}
+
+.date-month-cell.is-active {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: var(--button-text);
+  box-shadow: 0 12px 24px rgba(48, 31, 16, 0.12);
+}
+
+.date-showcase-emblem {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 22px;
+  align-items: center;
+  padding: 24px;
+}
+
+.date-emblem-medallion {
+  width: 164px;
+  height: 164px;
+  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--accent) 56%, white);
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, white 76%, var(--accent) 24%) 0%,
+    rgba(255, 255, 255, 0) 72%
+  );
+}
+
+.date-emblem-day {
+  font-size: clamp(3rem, 7vw, 4.8rem);
+}
+
+.date-emblem-month {
+  margin-top: 4px;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.74rem;
+}
+
 .countdown {
   margin-top: 24px;
   text-align: center;
@@ -2208,6 +2409,23 @@ h2 {
   .location {
     grid-template-columns: 1fr;
   }
+
+  .date-showcase-simple,
+  .date-showcase-editorial,
+  .date-showcase-emblem {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .date-simple-copy,
+  .date-emblem-copy,
+  .date-editorial-side,
+  .date-editorial-side.is-left,
+  .date-editorial-side.is-right {
+    justify-items: center;
+    text-align: center;
+  }
 }
 
 @media (max-width: 620px) {
@@ -2304,6 +2522,33 @@ h2 {
   .calendar-day.active::before {
     width: 150px;
     height: 150px;
+  }
+
+  .date-showcase-simple,
+  .date-showcase-editorial,
+  .date-showcase-month,
+  .date-showcase-emblem {
+    padding: 18px;
+  }
+
+  .date-showcase-month {
+    padding: 18px 14px;
+  }
+
+  .date-month-weekdays,
+  .date-month-grid {
+    gap: 6px;
+  }
+
+  .date-month-cell {
+    min-height: 40px;
+    border-radius: 12px;
+    font-size: 0.92rem;
+  }
+
+  .date-emblem-medallion {
+    width: 140px;
+    height: 140px;
   }
 
   .ambient-orb-a {

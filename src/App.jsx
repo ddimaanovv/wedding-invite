@@ -34,6 +34,10 @@ const WEEKDAYS = [
   "Суббота",
 ];
 const MONTH_LABEL = "июля";
+const MONTH_CALENDAR_LABEL = "\u0418\u044e\u043b\u044c 2026";
+const MONTH_EDITORIAL_LABEL = "\u0438\u044e\u043b\u044c";
+const DATE_FULL_LABEL = `4 ${MONTH_LABEL} 2026`;
+const MONTH_GRID_WEEKDAYS = ["\u041f\u043d", "\u0412\u0442", "\u0421\u0440", "\u0427\u0442", "\u041f\u0442", "\u0421\u0431", "\u0412\u0441"];
 const PROGRAM_ITEMS = [
   { time: "15:00", text: "Сбор гостей в welcome-зоне, фуршет" },
   { time: "16:00", text: "Начало торжества, аперитив" },
@@ -120,6 +124,7 @@ const HERO_PHOTOS_BY_VARIANT = {
 };
 
 const CALENDAR = createCalendarData(WEDDING_DATE);
+const MONTH_GRID = createMonthGridData(WEDDING_DATE);
 
 function createCalendarData(date) {
   const prev = new Date(date);
@@ -135,6 +140,142 @@ function createCalendarData(date) {
     mainWeekday: WEEKDAYS[date.getDay()],
     nextWeekday: WEEKDAYS[next.getDay()],
   };
+}
+
+function createMonthGridData(date) {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const leadingEmptyDays = (firstDay.getDay() + 6) % 7;
+  const cells = [];
+
+  for (let index = 0; index < leadingEmptyDays; index += 1) {
+    cells.push({ key: `empty-start-${index}`, label: "", isEmpty: true });
+  }
+
+  for (let day = 1; day <= daysInMonth; day += 1) {
+    cells.push({
+      key: `day-${day}`,
+      label: String(day),
+      isActive: day === date.getDate(),
+      isEmpty: false,
+    });
+  }
+
+  const trailingEmptyDays = (7 - (cells.length % 7 || 7)) % 7;
+
+  for (let index = 0; index < trailingEmptyDays; index += 1) {
+    cells.push({ key: `empty-end-${index}`, label: "", isEmpty: true });
+  }
+
+  return cells;
+}
+
+function renderDateDetails(variantKey, countdown) {
+  if (variantKey === "warm") {
+    return (
+      <>
+        <div className="date-showcase date-showcase-simple">
+          <div className="date-simple-day">04</div>
+          <div className="date-simple-copy">
+            <p className="date-eyebrow">{CALENDAR.mainWeekday}</p>
+            <p className="date-main">{MONTH_CALENDAR_LABEL}</p>
+          </div>
+        </div>
+        <p className="details-text countdown">{countdown}</p>
+      </>
+    );
+  }
+
+  if (variantKey === "modern") {
+    return (
+      <>
+        <div className="date-showcase date-showcase-editorial">
+          <div className="date-editorial-stack">
+            <div className="date-editorial-day">04</div>
+            <span className="date-editorial-kicker">{MONTH_EDITORIAL_LABEL}</span>
+            <span className="date-editorial-meta">2026</span>
+            <span className="date-editorial-kicker">{CALENDAR.mainWeekday}</span>
+          </div>
+        </div>
+        <p className="details-text countdown">{countdown}</p>
+      </>
+    );
+  }
+
+  if (variantKey === "minimal") {
+    return (
+      <>
+        <div className="date-showcase date-showcase-month">
+          <div className="date-month-head">
+            <span className="date-month-title">{MONTH_CALENDAR_LABEL}</span>
+            <span className="date-month-meta">{CALENDAR.mainWeekday}</span>
+          </div>
+          <div className="date-month-weekdays">
+            {MONTH_GRID_WEEKDAYS.map((weekday) => (
+              <span key={weekday}>{weekday}</span>
+            ))}
+          </div>
+          <div className="date-month-grid">
+            {MONTH_GRID.map((cell) => (
+              <span
+                key={cell.key}
+                className={`date-month-cell${cell.isActive ? " is-active" : ""}${cell.isEmpty ? " is-empty" : ""}`}
+              >
+                {cell.label}
+              </span>
+            ))}
+          </div>
+        </div>
+        <p className="details-text countdown">{countdown}</p>
+      </>
+    );
+  }
+
+  if (variantKey === "scenic") {
+    return (
+      <>
+        <div className="date-showcase date-showcase-emblem">
+          <div className="date-emblem-medallion">
+            <span className="date-emblem-day">04</span>
+            <span className="date-emblem-month">{MONTH_LABEL}</span>
+          </div>
+          <div className="date-emblem-copy">
+            <p className="date-eyebrow">{CALENDAR.mainWeekday}</p>
+            <p className="date-main">2026</p>
+          </div>
+        </div>
+        <p className="details-text countdown">{countdown}</p>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="calendar-strip">
+        <article className="calendar-day">
+          <div className="weekday">{CALENDAR.prevWeekday}</div>
+          <div className="month">{MONTH_LABEL}</div>
+          <div className="date">{CALENDAR.prevDate}</div>
+        </article>
+
+        <article className="calendar-day active">
+          <div className="weekday">{CALENDAR.mainWeekday}</div>
+          <div className="month">{MONTH_LABEL}</div>
+          <div className="date">{CALENDAR.mainDate}</div>
+        </article>
+
+        <article className="calendar-day">
+          <div className="weekday">{CALENDAR.nextWeekday}</div>
+          <div className="month">{MONTH_LABEL}</div>
+          <div className="date">{CALENDAR.nextDate}</div>
+        </article>
+      </div>
+
+      <p className="details-text countdown">{countdown}</p>
+    </>
+  );
 }
 
 function getVariantKeyFromLocation() {
@@ -595,27 +736,7 @@ function App() {
           <h2>Дата нашего дня</h2>
           <div className="gold-line" />
 
-          <div className="calendar-strip">
-            <article className="calendar-day">
-              <div className="weekday">{CALENDAR.prevWeekday}</div>
-              <div className="month">{MONTH_LABEL}</div>
-              <div className="date">{CALENDAR.prevDate}</div>
-            </article>
-
-            <article className="calendar-day active">
-              <div className="weekday">{CALENDAR.mainWeekday}</div>
-              <div className="month">{MONTH_LABEL}</div>
-              <div className="date">{CALENDAR.mainDate}</div>
-            </article>
-
-            <article className="calendar-day">
-              <div className="weekday">{CALENDAR.nextWeekday}</div>
-              <div className="month">{MONTH_LABEL}</div>
-              <div className="date">{CALENDAR.nextDate}</div>
-            </article>
-          </div>
-
-          <p className="details-text countdown">{countdown}</p>
+          {renderDateDetails(activeVariant.key, countdown)}
         </div>
       </section>
 
