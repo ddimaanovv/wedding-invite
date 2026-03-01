@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { initializeApp } from "firebase/app";
+import { startTransition, useEffect, useRef, useState } from "react";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import {
   addDoc,
   collection,
@@ -13,6 +13,11 @@ import ringsPng from "./assets/rings.webp";
 import scrollArrowSvg from "./assets/scroll-arrow.svg";
 import radisson from "./assets/radisson.webp";
 import mainPhoto from "./assets/main-photo.webp";
+import {
+  DEFAULT_VARIANT_KEY,
+  WEDDING_VARIANTS,
+  getWeddingVariant,
+} from "./variants";
 
 const WEDDING_DATE = new Date("2026-07-04T15:00:00+03:00");
 const WEEKDAYS = [
@@ -24,6 +29,30 @@ const WEEKDAYS = [
   "Пятница",
   "Суббота",
 ];
+const MONTH_LABEL = "июля";
+const PROGRAM_ITEMS = [
+  { time: "15:00", text: "Сбор гостей в welcome-зоне, фуршет" },
+  { time: "16:00", text: "Начало торжества, аперитив" },
+  { time: "17:00", text: "Банкет, поздравления" },
+  { time: "18:00", text: "Праздничная программа" },
+  { time: "20:00", text: "Вынос торта" },
+  { time: "21:00", text: "Танцы" },
+  { time: "23:00", text: "Финал" },
+];
+const CONTACTS = [
+  {
+    name: "Чингиз",
+    phone: "+7 905 168-73-19",
+    tel: "tel:+79051687319",
+    telegram: "tg://resolve?phone=79051687319",
+  },
+  {
+    name: "Элина",
+    phone: "+7 968 772-17-07",
+    tel: "tel:+79687721707",
+    telegram: "tg://resolve?phone=79687721707",
+  },
+];
 
 const firebaseConfig = {
   apiKey: "AIzaSyDCcOYnGQksJUe6P-kKlUEOtmsIXdBwH4E",
@@ -34,7 +63,7 @@ const firebaseConfig = {
   appId: "1:881433018362:web:5c573164a8ea308004ee43",
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const db = getFirestore(firebaseApp);
 
 const ALCOHOL_OPTIONS = [
@@ -55,7 +84,60 @@ const INITIAL_FORM_STATE = {
   alcoholOther: "",
 };
 
+const CALENDAR = createCalendarData(WEDDING_DATE);
+
+function createCalendarData(date) {
+  const prev = new Date(date);
+  const next = new Date(date);
+  prev.setDate(prev.getDate() - 1);
+  next.setDate(next.getDate() + 1);
+
+  return {
+    prevDate: prev.getDate(),
+    mainDate: date.getDate(),
+    nextDate: next.getDate(),
+    prevWeekday: WEEKDAYS[prev.getDay()],
+    mainWeekday: WEEKDAYS[date.getDay()],
+    nextWeekday: WEEKDAYS[next.getDay()],
+  };
+}
+
+function getVariantKeyFromLocation() {
+  if (typeof window === "undefined") {
+    return DEFAULT_VARIANT_KEY;
+  }
+
+  const key = new URLSearchParams(window.location.search).get("variant");
+  return getWeddingVariant(key).key;
+}
+
+function syncVariantInLocation(variantKey) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  const url = new URL(window.location.href);
+  url.searchParams.set("variant", variantKey);
+  window.history.replaceState({}, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function updateMeta(variant) {
+  if (typeof document === "undefined") {
+    return;
+  }
+
+  document.title = variant.meta.title;
+  const descriptionTag = document.querySelector('meta[name="description"]');
+
+  if (descriptionTag) {
+    descriptionTag.setAttribute("content", variant.meta.description);
+  }
+}
+
 function App() {
+  const [activeVariantKey, setActiveVariantKey] = useState(() =>
+    getVariantKeyFromLocation(),
+  );
   const [countdown, setCountdown] = useState("");
   const [heroPhotoReady, setHeroPhotoReady] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
@@ -63,22 +145,7 @@ function App() {
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const rsvpSectionRef = useRef(null);
-
-  const calendar = useMemo(() => {
-    const prev = new Date(WEDDING_DATE);
-    const next = new Date(WEDDING_DATE);
-    prev.setDate(prev.getDate() - 1);
-    next.setDate(next.getDate() + 1);
-
-    return {
-      prevDate: prev.getDate(),
-      mainDate: WEDDING_DATE.getDate(),
-      nextDate: next.getDate(),
-      prevWeekday: WEEKDAYS[prev.getDay()],
-      mainWeekday: WEEKDAYS[WEDDING_DATE.getDay()],
-      nextWeekday: WEEKDAYS[next.getDay()],
-    };
-  }, []);
+  const activeVariant = getWeddingVariant(activeVariantKey);
 
   useEffect(() => {
     const updateCountdown = () => {
@@ -137,6 +204,7 @@ function App() {
     });
   }, [submitStatus]);
 
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
@@ -144,6 +212,7 @@ function App() {
       if (name === "withGuest" && value === "Нет") {
         return { ...prev, withGuest: value, guestName: "" };
       }
+
       return { ...prev, [name]: value };
     });
   };
@@ -209,18 +278,34 @@ function App() {
     }
   };
 
+  const handleVariantChange = (variantKey) => {
+    if (variantKey === activeVariant.key) {
+      return;
+    }
+
+    startTransition(() => {
+      setActiveVariantKey(variantKey);
+    });
+  };
+
   return (
-    <>
+    <div
+      className="page-shell"
+    >
       <div className="ambient-bg" aria-hidden="true">
-        <img className="float-shape heart-icon heart-a" src={heartSvg} alt="" />
-        <img className="float-shape heart-icon heart-b" src={heartSvg} alt="" />
-        <img className="float-shape heart-icon heart-c" src={heartSvg} alt="" />
-        <img className="float-shape heart-icon heart-d" src={heartSvg} alt="" />
-        <img className="float-shape heart-icon heart-e" src={heartSvg} alt="" />
-        <img className="float-shape heart-icon heart-f" src={heartSvg} alt="" />
-        <img className="float-shape png-dove" src={dovePng} alt="" />
-        <img className="float-shape png-dove png-dove-b" src={ringsPng} alt="" />
-        <img className="float-shape png-dove png-dove-c" src={flowersPng} alt="" />
+        <span className="ambient-orb ambient-orb-a" />
+        <span className="ambient-orb ambient-orb-b" />
+        <span className="ambient-orb ambient-orb-c" />
+        <span className="ambient-orb ambient-orb-d" />
+        <span className="ambient-line ambient-line-a" />
+        <span className="ambient-line ambient-line-b" />
+        <img className="float-shape ambient-heart heart-a" src={heartSvg} alt="" />
+        <img className="float-shape ambient-heart heart-b" src={heartSvg} alt="" />
+        <img className="float-shape ambient-heart heart-c" src={heartSvg} alt="" />
+        <img className="float-shape ambient-heart heart-d" src={heartSvg} alt="" />
+        <img className="float-shape ambient-dove" src={dovePng} alt="" />
+        <img className="float-shape ambient-rings" src={ringsPng} alt="" />
+        <img className="float-shape ambient-flowers" src={flowersPng} alt="" />
       </div>
 
       <section className="hero-stage">
@@ -246,18 +331,16 @@ function App() {
               <span />
             </div>
             <div className="hero-card">
+              <p className="hero-kicker">{activeVariant.hero.kicker}</p>
               <h1>Чингиз & Элина</h1>
               <div className="gold-line" />
-              <p className="subtitle">Свадебное приглашение</p>
+              <p className="subtitle">{activeVariant.hero.subtitle}</p>
               <p className="date-line">4 июля 2026 года · начало в 15:00</p>
             </div>
           </section>
-          <h3 className="hero-appeal">Дорогие гости!</h3>
-          <p className="hero-note fade show">
-            Приглашаем вас разделить с нами торжество, посвященное дню нашей
-            свадьбы. Для нас будет огромной радостью провести этот счастливый
-            день в кругу самых близких и дорогих людей
-          </p>
+
+          <h3 className="hero-appeal">{activeVariant.hero.appeal}</h3>
+          <p className="hero-note fade show">{activeVariant.hero.note}</p>
 
           <a className="scroll-hint" href="#details">
             <img src={scrollArrowSvg} alt="" aria-hidden="true" />
@@ -272,21 +355,21 @@ function App() {
 
           <div className="calendar-strip">
             <article className="calendar-day">
-              <div className="weekday">{calendar.prevWeekday}</div>
-              <div className="month">июля</div>
-              <div className="date">{calendar.prevDate}</div>
+              <div className="weekday">{CALENDAR.prevWeekday}</div>
+              <div className="month">{MONTH_LABEL}</div>
+              <div className="date">{CALENDAR.prevDate}</div>
             </article>
 
             <article className="calendar-day active">
-              <div className="weekday">{calendar.mainWeekday}</div>
-              <div className="month">июля</div>
-              <div className="date">{calendar.mainDate}</div>
+              <div className="weekday">{CALENDAR.mainWeekday}</div>
+              <div className="month">{MONTH_LABEL}</div>
+              <div className="date">{CALENDAR.mainDate}</div>
             </article>
 
             <article className="calendar-day">
-              <div className="weekday">{calendar.nextWeekday}</div>
-              <div className="month">июля</div>
-              <div className="date">{calendar.nextDate}</div>
+              <div className="weekday">{CALENDAR.nextWeekday}</div>
+              <div className="month">{MONTH_LABEL}</div>
+              <div className="date">{CALENDAR.nextDate}</div>
             </article>
           </div>
 
@@ -300,34 +383,12 @@ function App() {
           <div className="gold-line" />
 
           <div className="event-grid">
-            <article className="event-item">
-              <div className="event-time">15:00</div>
-              <p className="details-text">Сбор гостей в welcome-зоне, фуршет</p>
-            </article>
-            <article className="event-item">
-              <div className="event-time">16:00</div>
-              <p className="details-text">Начало торжества, аперитив</p>
-            </article>
-            <article className="event-item">
-              <div className="event-time">17:00</div>
-              <p className="details-text">Банкет, поздравления</p>
-            </article>
-            <article className="event-item">
-              <div className="event-time">18:00</div>
-              <p className="details-text">Праздничная программа</p>
-            </article>
-            <article className="event-item">
-              <div className="event-time">20:00</div>
-              <p className="details-text">Вынос торта</p>
-            </article>
-            <article className="event-item">
-              <div className="event-time">21:00</div>
-              <p className="details-text">Танцы</p>
-            </article>
-            <article className="event-item">
-              <div className="event-time">23:00</div>
-              <p className="details-text">Финал</p>
-            </article>
+            {PROGRAM_ITEMS.map((item) => (
+              <article className="event-item" key={item.time}>
+                <div className="event-time">{item.time}</div>
+                <p className="details-text">{item.text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -343,10 +404,7 @@ function App() {
             <div>
               <h3>Radisson Blu</h3>
               <h5>Москва, Ленинский проспект, 90/3</h5>
-              <p className="details-text">
-                Пространство с панорамным светом, утонченным интерьером и уютной
-                атмосферой для самого важного вечера
-              </p>
+              <p className="details-text">{activeVariant.venueDescription}</p>
 
               <div className="actions">
                 <a
@@ -367,14 +425,11 @@ function App() {
         <div className="glass details-card">
           <h2>Детали</h2>
           <div className="gold-line" />
-          <p className="details-text">
-            Свои тёплые слова и пожелания приносите в сердцах, а подарки - в
-            конверте
-          </p>
-          <p className="details-text">
-            Вместо цветов мы будем счастливы получить бутылочку вина, которую
-            вместе разделим однажды вечером
-          </p>
+          {activeVariant.details.map((paragraph) => (
+            <p className="details-text" key={paragraph}>
+              {paragraph}
+            </p>
+          ))}
         </div>
       </section>
 
@@ -382,11 +437,14 @@ function App() {
         <div className="glass rsvp-card">
           <h2>Подтверждение присутствия</h2>
           <div className="gold-line" />
-          <p>Пожалуйста, заполните анкету</p>
+          <p>{activeVariant.rsvpIntro}</p>
 
           {submitStatus === "success" ? (
             <div className="form-success" role="status">
-              <span>Ваш ответ отправлен. Если что-то изменится, заполните анкету заново.</span>
+              <span>
+                Ваш ответ отправлен. Если что-то изменится, заполните анкету
+                заново.
+              </span>
               <button
                 type="button"
                 className="btn btn-soft form-success-action"
@@ -504,7 +562,11 @@ function App() {
 
               <div className="form-field">
                 <div className="form-label">Какой алкоголь будете пить?</div>
-                <div className="form-fieldset" role="group" aria-label="Какой алкоголь будете пить?">
+                <div
+                  className="form-fieldset"
+                  role="group"
+                  aria-label="Какой алкоголь будете пить?"
+                >
                   <div className="form-choice-group form-choice-group-multi">
                     {ALCOHOL_OPTIONS.map((option) => (
                       <label className="form-choice" key={option}>
@@ -553,89 +615,91 @@ function App() {
         <div className="glass contacts-card">
           <h2>Контакты</h2>
           <div className="gold-line" />
-          <p className="contacts-note">
-            Если появятся вопросы, свяжитесь с нами:
-          </p>
+          <p className="contacts-note">{activeVariant.contactsNote}</p>
 
           <div className="contacts-list">
-            <article className="contact-item">
-              <p className="contact-person">Чингиз</p>
-              <a
-                className="contact-row contact-row-link"
-                href="tel:+79051687319"
-              >
-                <svg
-                  className="contact-icon"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M6.62 10.79a15.06 15.06 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.24 11.8 11.8 0 0 0 3.71.59 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.27a1 1 0 0 1 1 1 11.8 11.8 0 0 0 .59 3.71 1 1 0 0 1-.25 1.01z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <span className="contact-text">+7 905 168-73-19</span>
-              </a>
-              <a
-                className="contact-row contact-row-link"
-                href="tg://resolve?phone=79051687319"
-              >
-                <svg
-                  className="contact-icon"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M9.04 15.47l-.38 5.35c.55 0 .79-.24 1.08-.53l2.59-2.47 5.37 3.93c.98.54 1.68.26 1.94-.91l3.52-16.47h0c.32-1.49-.54-2.08-1.49-1.73L1.16 10.54c-1.4.55-1.38 1.33-.24 1.68l5.24 1.63L18.33 6.2c.57-.37 1.09-.16.66.22"
-                    fill="currentColor"
-                  />
-                </svg>
-                <span className="contact-text contact-text-soft">Telegram</span>
-              </a>
-            </article>
+            {CONTACTS.map((contact) => (
+              <article className="contact-item" key={contact.name}>
+                <p className="contact-person">{contact.name}</p>
+                <a className="contact-row contact-row-link" href={contact.tel}>
+                  <PhoneIcon />
+                  <span className="contact-text">{contact.phone}</span>
+                </a>
+                <a className="contact-row contact-row-link" href={contact.telegram}>
+                  <TelegramIcon />
+                  <span className="contact-text contact-text-soft">Telegram</span>
+                </a>
+              </article>
+            ))}
+          </div>
 
-            <article className="contact-item">
-              <p className="contact-person">Элина</p>
-              <a
-                className="contact-row contact-row-link"
-                href="tel:+79687721707"
+        </div>
+      </section>
+      <section className="variant-dock-shell">
+        <div className="variant-dock">
+          <p className="variant-dock-title">Вариант текста</p>
+
+          <div
+            className="variant-switcher"
+            role="group"
+            aria-label="Варианты текста приглашения"
+          >
+            {WEDDING_VARIANTS.map((variant) => (
+              <button
+                key={variant.key}
+                type="button"
+                className={`variant-pill ${
+                  variant.key === activeVariant.key ? "is-active" : ""
+                }`}
+                onClick={() => handleVariantChange(variant.key)}
+                aria-pressed={variant.key === activeVariant.key}
               >
-                <svg
-                  className="contact-icon"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M6.62 10.79a15.06 15.06 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.24 11.8 11.8 0 0 0 3.71.59 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.27a1 1 0 0 1 1 1 11.8 11.8 0 0 0 .59 3.71 1 1 0 0 1-.25 1.01z"
-                    fill="currentColor"
-                  />
-                </svg>
-                <span className="contact-text">+7 968 772-17-07</span>
-              </a>
-              <a
-                className="contact-row contact-row-link"
-                href="tg://resolve?phone=79687721707"
-              >
-                <svg
-                  className="contact-icon"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M9.04 15.47l-.38 5.35c.55 0 .79-.24 1.08-.53l2.59-2.47 5.37 3.93c.98.54 1.68.26 1.94-.91l3.52-16.47h0c.32-1.49-.54-2.08-1.49-1.73L1.16 10.54c-1.4.55-1.38 1.33-.24 1.68l5.24 1.63L18.33 6.2c.57-.37 1.09-.16.66.22"
-                    fill="currentColor"
-                  />
-                </svg>
-                <span className="contact-text contact-text-soft">Telegram</span>
-              </a>
-            </article>
+                <span className="variant-pill-title">{variant.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="variant-dots" aria-hidden="true">
+            {WEDDING_VARIANTS.map((variant) => (
+              <span
+                key={`${variant.key}-dot`}
+                className={`variant-dot ${
+                  variant.key === activeVariant.key ? "is-active" : ""
+                }`}
+              />
+            ))}
           </div>
         </div>
       </section>
+      <footer>{activeVariant.footer} {"\u2665"}</footer>
+    </div>
+  );
+}
 
-      <footer>С любовью, Чингиз и Элина ♥</footer>
-    </>
+function PhoneIcon() {
+  return (
+    <svg className="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M6.62 10.79a15.06 15.06 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1-.24 11.8 11.8 0 0 0 3.71.59 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.27a1 1 0 0 1 1 1 11.8 11.8 0 0 0 .59 3.71 1 1 0 0 1-.25 1.01z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+function TelegramIcon() {
+  return (
+    <svg className="contact-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M9.04 15.47l-.38 5.35c.55 0 .79-.24 1.08-.53l2.59-2.47 5.37 3.93c.98.54 1.68.26 1.94-.91l3.52-16.47h0c.32-1.49-.54-2.08-1.49-1.73L1.16 10.54c-1.4.55-1.38 1.33-.24 1.68l5.24 1.63L18.33 6.2c.57-.37 1.09-.16.66.22"
+        fill="currentColor"
+      />
+    </svg>
   );
 }
 
 export default App;
+
+
+
+
