@@ -24,6 +24,25 @@ import {
 } from "./variants";
 
 const WEDDING_DATE = new Date("2026-07-04T15:00:00+03:00");
+const COUNTDOWN_PREFIX_LABEL = "\u0414\u043e \u0441\u0432\u0430\u0434\u044c\u0431\u044b \u043e\u0441\u0442\u0430\u043b\u043e\u0441\u044c";
+const COUNTDOWN_TODAY_LABEL = "\u0421\u0435\u0433\u043e\u0434\u043d\u044f \u043d\u0430\u0448 \u0434\u0435\u043d\u044c \u2665";
+const COUNTDOWN_PARTS = [
+  { key: "days", label: "\u0434\u043d\u0435\u0439:" },
+  { key: "hours", label: "\u0447\u0430\u0441\u043e\u0432:" },
+  { key: "minutes", label: "\u043c\u0438\u043d\u0443\u0442:" },
+];
+const MINIMAL_DRESS_CODE_TITLE = "\u0414\u0440\u0435\u0441\u0441-\u043a\u043e\u0434";
+const MINIMAL_DRESS_CODE_INTRO = "\u0411\u0443\u0434\u0435\u043c \u0440\u0430\u0434\u044b \u043e\u0431\u0440\u0430\u0437\u0430\u043c \u0432 \u0441\u0432\u0435\u0442\u043b\u043e\u0439, \u043f\u0440\u0438\u0433\u043b\u0443\u0448\u0435\u043d\u043d\u043e\u0439 \u0433\u0430\u043c\u043c\u0435 \u2014 \u043c\u043e\u043b\u043e\u0447\u043d\u044b\u0435, \u043f\u0435\u0441\u043e\u0447\u043d\u044b\u0435, \u043f\u0443\u0434\u0440\u043e\u0432\u044b\u0435 \u0438 \u0434\u044b\u043c\u0447\u0430\u0442\u043e-\u0433\u043e\u043b\u0443\u0431\u044b\u0435 \u043e\u0442\u0442\u0435\u043d\u043a\u0438.";
+const MINIMAL_DRESS_CODE_PALETTE_TITLE = "\u0420\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u043c\u0430\u044f \u043f\u0430\u043b\u0438\u0442\u0440\u0430";
+const MINIMAL_DRESS_CODE_SUMMARY = "\u041f\u043e\u0434\u043e\u0439\u0434\u0443\u0442 \u043b\u0430\u043a\u043e\u043d\u0438\u0447\u043d\u044b\u0435 \u043f\u043b\u0430\u0442\u044c\u044f, \u043a\u043e\u0441\u0442\u044e\u043c\u044b \u0438\u043b\u0438 \u043a\u043e\u043c\u043f\u043b\u0435\u043a\u0442\u044b \u0432 \u0441\u043f\u043e\u043a\u043e\u0439\u043d\u043e\u043c \u0441\u0442\u0438\u043b\u0435 \u0438\u0437 \u043b\u0435\u0433\u043a\u0438\u0445 \u043c\u0430\u0442\u043e\u0432\u044b\u0445 \u0442\u043a\u0430\u043d\u0435\u0439; \u0438\u0437\u0431\u0435\u0433\u0430\u0439\u0442\u0435 \u043d\u0435\u043e\u043d\u043e\u0432\u044b\u0445 \u043e\u0442\u0442\u0435\u043d\u043a\u043e\u0432, total black \u0438 \u043a\u0440\u0443\u043f\u043d\u043e\u0433\u043e \u043f\u0440\u0438\u043d\u0442\u0430.";
+const MINIMAL_DRESS_CODE_NOTE = "\u0415\u0441\u043b\u0438 \u0443 \u0432\u0430\u0441 \u0435\u0441\u0442\u044c \u0441\u043e\u043c\u043d\u0435\u043d\u0438\u044f \u043f\u043e \u043e\u0431\u0440\u0430\u0437\u0443, \u043e\u0440\u0438\u0435\u043d\u0442\u0438\u0440\u0443\u0439\u0442\u0435\u0441\u044c \u043d\u0430 \u044d\u0444\u0444\u0435\u043a\u0442 \u043c\u044f\u0433\u043a\u043e\u0439 \u044d\u043b\u0435\u0433\u0430\u043d\u0442\u043d\u043e\u0441\u0442\u0438 \u0431\u0435\u0437 \u0440\u0435\u0437\u043a\u0438\u0445 \u043a\u043e\u043d\u0442\u0440\u0430\u0441\u0442\u043e\u0432.";
+const MINIMAL_DRESS_CODE_SWATCHES = [
+  { label: "\u041c\u043e\u043b\u043e\u0447\u043d\u044b\u0439", color: "#f4eee6" },
+  { label: "\u0428\u0430\u043c\u043f\u0430\u043d\u044c", color: "#e9dcc7" },
+  { label: "\u041f\u0435\u0441\u043e\u0447\u043d\u044b\u0439", color: "#d8c0a0" },
+  { label: "\u041f\u0443\u0434\u0440\u043e\u0432\u044b\u0439", color: "#d9c0c6" },
+  { label: "\u0414\u044b\u043c\u0447\u0430\u0442\u043e-\u0433\u043e\u043b\u0443\u0431\u043e\u0439", color: "#b8c6d1" },
+];
 const WEEKDAYS = [
   "Воскресенье",
   "Понедельник",
@@ -38,6 +57,12 @@ const MONTH_CALENDAR_LABEL = "\u0418\u044e\u043b\u044c 2026";
 const MONTH_EDITORIAL_LABEL = "\u0438\u044e\u043b\u044c";
 const DATE_FULL_LABEL = `4 ${MONTH_LABEL} 2026`;
 const MONTH_GRID_WEEKDAYS = ["\u041f\u043d", "\u0412\u0442", "\u0421\u0440", "\u0427\u0442", "\u041f\u0442", "\u0421\u0431", "\u0412\u0441"];
+const WARM_INTRO_OVERLINE = "\u0421\u0432\u0430\u0434\u0435\u0431\u043d\u043e\u0435 \u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0435\u043d\u0438\u0435";
+const WARM_INTRO_MONOGRAM = "\u041c & \u0421";
+const WARM_INTRO_NAMES = "\u041c\u0438\u0445\u0430\u0438\u043b & \u0421\u043e\u0444\u0438\u044f";
+const WARM_INTRO_SUBTITLE = "\u0421\u0432\u0430\u0434\u0435\u0431\u043d\u043e\u0435 \u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0435\u043d\u0438\u0435";
+const WARM_INTRO_OPEN_LABEL = "\u041e\u0442\u043a\u0440\u044b\u0442\u044c";
+const WARM_INTRO_OPEN_SUBLABEL = "\u043f\u0440\u0438\u0433\u043b\u0430\u0448\u0435\u043d\u0438\u0435";
 const PROGRAM_ITEMS = [
   { time: "15:00", text: "Сбор гостей в welcome-зоне, фуршет" },
   { time: "16:00", text: "Начало торжества, аперитив" },
@@ -172,6 +197,93 @@ function createMonthGridData(date) {
   return cells;
 }
 
+function getCountdownState() {
+  const now = new Date();
+  const diff = WEDDING_DATE - now;
+
+  if (diff <= 0) {
+    return {
+      status: "today",
+      days: 0,
+      hours: 0,
+      minutes: 0,
+    };
+  }
+
+  return {
+    status: "counting",
+    days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+  };
+}
+
+function getCountdownText(countdown) {
+  if (countdown.status === "today") {
+    return COUNTDOWN_TODAY_LABEL;
+  }
+
+  return `${COUNTDOWN_PREFIX_LABEL} ${countdown.days} \u0434\u043d. ${countdown.hours} \u0447. ${countdown.minutes} \u043c\u0438\u043d.`;
+}
+function renderCountdownPanel(countdown, className = "") {
+  const panelClassName = className
+    ? `countdown-panel ${className}`
+    : "countdown-panel";
+
+  return (
+    <div className={panelClassName} aria-label={COUNTDOWN_PREFIX_LABEL}>
+      {countdown.status === "today" ? (
+        <p className="details-text countdown countdown-panel-message">
+          {COUNTDOWN_TODAY_LABEL}
+        </p>
+      ) : (
+        <div className="countdown-grid">
+          {COUNTDOWN_PARTS.map((part) => (
+            <article className="countdown-unit" key={part.key}>
+              <span className="countdown-label">{part.label}</span>
+              <span className="countdown-value">{countdown[part.key]}</span>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+function renderDressCodeSection(variantKey) {
+  if (variantKey !== "minimal") {
+    return null;
+  }
+
+  return (
+    <section className="fade" id="dress-code">
+      <div className="glass dress-code-card">
+        <h2>{MINIMAL_DRESS_CODE_TITLE}</h2>
+        <div className="gold-line" />
+        <p className="dress-code-intro">{MINIMAL_DRESS_CODE_INTRO}</p>
+
+        <div className="dress-code-palette">
+          <p className="dress-code-panel-title">
+            {MINIMAL_DRESS_CODE_PALETTE_TITLE}
+          </p>
+          <div className="dress-code-swatches">
+            {MINIMAL_DRESS_CODE_SWATCHES.map((swatch) => (
+              <article className="dress-code-swatch" key={swatch.label}>
+                <span
+                  className="dress-code-swatch-chip"
+                  style={{ "--swatch-color": swatch.color }}
+                />
+                <span className="dress-code-swatch-name">{swatch.label}</span>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <p className="dress-code-summary">{MINIMAL_DRESS_CODE_SUMMARY}</p>
+        <p className="dress-code-note">{MINIMAL_DRESS_CODE_NOTE}</p>
+      </div>
+    </section>
+  );
+}
 function renderDateDetails(variantKey, countdown) {
   if (variantKey === "warm") {
     return (
@@ -183,7 +295,7 @@ function renderDateDetails(variantKey, countdown) {
             <p className="date-main">{MONTH_CALENDAR_LABEL}</p>
           </div>
         </div>
-        <p className="details-text countdown">{countdown}</p>
+        <p className="details-text countdown">{getCountdownText(countdown)}</p>
       </>
     );
   }
@@ -199,7 +311,6 @@ function renderDateDetails(variantKey, countdown) {
             <span className="date-editorial-kicker">{CALENDAR.mainWeekday}</span>
           </div>
         </div>
-        <p className="details-text countdown">{countdown}</p>
       </>
     );
   }
@@ -228,7 +339,7 @@ function renderDateDetails(variantKey, countdown) {
             ))}
           </div>
         </div>
-        <p className="details-text countdown">{countdown}</p>
+        <p className="details-text countdown">{getCountdownText(countdown)}</p>
       </>
     );
   }
@@ -246,7 +357,7 @@ function renderDateDetails(variantKey, countdown) {
             <p className="date-main">2026</p>
           </div>
         </div>
-        <p className="details-text countdown">{countdown}</p>
+        <p className="details-text countdown">{getCountdownText(countdown)}</p>
       </>
     );
   }
@@ -273,7 +384,7 @@ function renderDateDetails(variantKey, countdown) {
         </article>
       </div>
 
-      <p className="details-text countdown">{countdown}</p>
+      <p className="details-text countdown">{getCountdownText(countdown)}</p>
     </>
   );
 }
@@ -327,18 +438,73 @@ function App() {
   const [activeVariantKey, setActiveVariantKey] = useState(() =>
     getVariantKeyFromLocation(),
   );
-  const [countdown, setCountdown] = useState("");
+  const [countdown, setCountdown] = useState(() => getCountdownState());
   const [heroPhotoReady, setHeroPhotoReady] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const [submitStatus, setSubmitStatus] = useState("idle");
   const [submitError, setSubmitError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isWarmIntroDismissed, setIsWarmIntroDismissed] = useState(() =>
+    getVariantKeyFromLocation() !== "warm",
+  );
+  const [isWarmIntroOpening, setIsWarmIntroOpening] = useState(false);
+  const warmIntroTimeoutRef = useRef(null);
   const rsvpSectionRef = useRef(null);
   const activeVariant = getWeddingVariant(activeVariantKey);
   const activeHeroPhoto = HERO_PHOTOS_BY_VARIANT[activeVariant.key] ?? mainPhoto1;
   const shouldHideHeroPhoto =
     activeVariant.key === "minimal" || activeVariant.key === "scenic";
+  const isWarmIntroVisible =
+    activeVariant.key === "warm" && !isWarmIntroDismissed;
+  const warmIntroClassName = isWarmIntroVisible
+    ? isWarmIntroOpening
+      ? " warm-intro-opening"
+      : " warm-intro-active"
+    : "";
+  const pageShellClassName = `page-shell theme-${activeVariant.scene}${warmIntroClassName}`;
 
+  useEffect(() => {
+    return () => {
+      if (warmIntroTimeoutRef.current) {
+        clearTimeout(warmIntroTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (warmIntroTimeoutRef.current) {
+      clearTimeout(warmIntroTimeoutRef.current);
+      warmIntroTimeoutRef.current = null;
+    }
+
+    if (activeVariant.key === "warm") {
+      setIsWarmIntroDismissed(false);
+      setIsWarmIntroOpening(false);
+      return;
+    }
+
+    setIsWarmIntroDismissed(true);
+    setIsWarmIntroOpening(false);
+  }, [activeVariant.key]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return undefined;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    const previousTouchAction = document.body.style.touchAction;
+
+    if (isWarmIntroVisible) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    }
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.body.style.touchAction = previousTouchAction;
+    };
+  }, [isWarmIntroVisible]);
 
   useEffect(() => {
     if (typeof window === "undefined" || shouldHideHeroPhoto) {
@@ -398,20 +564,7 @@ function App() {
 
   useEffect(() => {
     const updateCountdown = () => {
-      const now = new Date();
-      const diff = WEDDING_DATE - now;
-
-      if (diff <= 0) {
-        setCountdown("Сегодня наш день ♥");
-        return;
-      }
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      setCountdown(
-        `До свадьбы осталось ${days} дн. ${hours} ч. ${minutes} мин.`,
-      );
+      setCountdown(getCountdownState());
     };
 
     updateCountdown();
@@ -587,6 +740,48 @@ function App() {
       setIsSubmitting(false);
     }
   };
+  const completeWarmIntro = () => {
+    setIsWarmIntroDismissed(true);
+    setIsWarmIntroOpening(false);
+
+    if (warmIntroTimeoutRef.current) {
+      clearTimeout(warmIntroTimeoutRef.current);
+      warmIntroTimeoutRef.current = null;
+    }
+  };
+
+  const handleWarmInvitationOpen = () => {
+    if (isWarmIntroOpening) {
+      return;
+    }
+
+    setIsWarmIntroOpening(true);
+
+    if (warmIntroTimeoutRef.current) {
+      clearTimeout(warmIntroTimeoutRef.current);
+    }
+
+    // Fallback in case animation events are skipped (tab hidden, etc.).
+    warmIntroTimeoutRef.current = setTimeout(() => {
+      completeWarmIntro();
+    }, 2400);
+  };
+
+  const handleWarmIntroAnimationEnd = (event) => {
+    if (!isWarmIntroOpening) {
+      return;
+    }
+
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    if (event.animationName !== "warm-gate-fade") {
+      return;
+    }
+
+    completeWarmIntro();
+  };
 
   const handleVariantChange = (variantKey) => {
     if (variantKey === activeVariant.key) {
@@ -599,7 +794,7 @@ function App() {
   };
 
   return (
-    <div className={`page-shell theme-${activeVariant.scene}`} style={activeVariant.theme}>
+    <div className={pageShellClassName} style={activeVariant.theme}>
       <div className="ambient-bg" aria-hidden="true">
         <span className="ambient-layer ambient-wash" />
         <span className="ambient-layer ambient-veil" />
@@ -681,7 +876,37 @@ function App() {
         <img className="float-shape ambient-flowers" src={flowersPng} alt="" />
       </div>
 
-      <section className="hero-stage">
+      {isWarmIntroVisible ? (
+        <div
+          className={`warm-invite-gate${isWarmIntroOpening ? " is-opening" : ""}`}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="warm-intro-title"
+          onAnimationEnd={handleWarmIntroAnimationEnd}
+        >
+          <div className="warm-envelope-screen" aria-hidden="true">
+            <div className="warm-envelope-panel warm-envelope-panel-left" />
+            <div className="warm-envelope-panel warm-envelope-panel-right" />
+          </div>
+
+          <div className="warm-envelope-ui">
+            <p className="warm-intro-overline">{WARM_INTRO_OVERLINE}</p>
+            <button
+              id="warm-intro-title"
+              type="button"
+              className="warm-envelope-seal warm-envelope-open"
+              onClick={handleWarmInvitationOpen}
+              disabled={isWarmIntroOpening}
+            >
+              <span>{WARM_INTRO_OPEN_LABEL}</span>
+              <small>{WARM_INTRO_OPEN_SUBLABEL}</small>
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      <div className="page-content">
+        <section className="hero-stage">
         <div
           className={`hero-photo-shell ${
             shouldHideHeroPhoto ? "is-placeholder" : ""
@@ -740,6 +965,16 @@ function App() {
         </div>
       </section>
 
+      {activeVariant.key === "modern" ? (
+        <section className="fade" id="countdown-section">
+          <div className="glass">
+            <h2>{COUNTDOWN_PREFIX_LABEL}</h2>
+            <div className="gold-line" />
+
+            {renderCountdownPanel(countdown, "countdown-panel-standalone")}
+          </div>
+        </section>
+      ) : null}
       <section className="fade">
         <div className="glass">
           <h2>Программа дня</h2>
@@ -795,6 +1030,8 @@ function App() {
           ))}
         </div>
       </section>
+
+      {renderDressCodeSection(activeVariant.key)}
 
       <section className="fade" id="rsvp" ref={rsvpSectionRef}>
         <div className="glass rsvp-card">
@@ -998,6 +1235,13 @@ function App() {
 
         </div>
       </section>
+      <section className="fade footer-section">
+          <div className="glass footer-card">
+            <p className="footer-text">{activeVariant.footer} {"\u2665"}</p>
+          </div>
+        </section>
+      </div>
+
       <section className="variant-dock-shell">
         <div className="variant-dock">
 
@@ -1033,12 +1277,7 @@ function App() {
           </div>
         </div>
       </section>
-      <section className="fade footer-section">
-        <div className="glass footer-card">
-          <p className="footer-text">{activeVariant.footer} {"\u2665"}</p>
-        </div>
-      </section>
-    </div>
+      </div>
   );
 }
 
