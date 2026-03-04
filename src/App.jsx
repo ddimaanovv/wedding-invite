@@ -884,9 +884,9 @@ function App() {
           aria-labelledby="warm-intro-title"
           onAnimationEnd={handleWarmIntroAnimationEnd}
         >
-          <div className="warm-envelope-screen" aria-hidden="true">
-            <div className="warm-envelope-panel warm-envelope-panel-left" />
-            <div className="warm-envelope-panel warm-envelope-panel-right" />
+          <div className="warm-arch-screen" aria-hidden="true">
+            <div className="warm-arch-panel warm-arch-panel-left" />
+            <div className="warm-arch-panel warm-arch-panel-right" />
           </div>
 
           <div className="warm-envelope-ui">
