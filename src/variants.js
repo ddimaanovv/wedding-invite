@@ -4,12 +4,14 @@
   "--hero-photo-radius": "0 0 42px 42px",
   "--panel-radius": "30px",
   "--button-radius": "999px",
-  "--display-font": '"Playfair Display", serif',
-  "--body-font": '"Inter", sans-serif',
+  "--display-font": '"Cormorant Garamond", serif',
+  "--body-font": '"Cormorant Garamond", serif',
 };
 
 const bloomTheme = {
   ...baseTheme,
+  "--display-font": '"Great Vibes", cursive',
+  "--body-font": '"Great Vibes", cursive',
   "--page-background":
     "linear-gradient(140deg, #fffafc, #f8eef4 46%, #f4eefb)",
   "--surface":
@@ -36,6 +38,8 @@ const bloomTheme = {
 
 const velvetTheme = {
   ...baseTheme,
+  "--display-font": '"Amatic SC", cursive',
+  "--body-font": '"Amatic SC", cursive',
   "--page-background":
     "radial-gradient(circle at 18% 18%, rgba(58, 30, 48, 0.24), transparent 24%), radial-gradient(circle at 82% 20%, rgba(74, 41, 29, 0.18), transparent 20%), radial-gradient(circle at 50% 78%, rgba(44, 18, 34, 0.2), transparent 28%), linear-gradient(145deg, #09070b, #120d14 42%, #1a1017)",
   "--surface":
@@ -62,6 +66,8 @@ const velvetTheme = {
 
 const celestialTheme = {
   ...baseTheme,
+  "--display-font": '"Caveat", cursive',
+  "--body-font": '"Caveat", cursive',
   "--page-background":
     "linear-gradient(180deg, rgba(250, 246, 239, 0.24), rgba(243, 235, 224, 0.12))",
   "--surface":
@@ -113,6 +119,8 @@ const softTheme = {
 
 const scenicTheme = {
   ...softTheme,
+  "--display-font": '"Forum", serif',
+  "--body-font": '"Forum", serif',
   "--page-background": "#ece1d3",
   "--surface": "linear-gradient(140deg, rgba(255, 255, 255, 0.86), rgba(247, 241, 232, 0.8))",
   "--surface-strong": "rgba(255, 255, 255, 0.88)",

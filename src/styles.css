@@ -51,8 +51,8 @@ a {
 }
 
 .page-shell {
-  --display-font: "Playfair Display", serif;
-  --body-font: "Inter", sans-serif;
+  --display-font: "Cormorant Garamond", serif;
+  --body-font: "Cormorant Garamond", serif;
   --page-background: linear-gradient(180deg, #fff, #f7f1e8);
   --surface: rgba(255, 255, 255, 0.88);
   --surface-strong: rgba(255, 255, 255, 0.94);
@@ -371,6 +371,14 @@ h2 {
   line-height: 1.1;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.theme-bloom .warm-intro-overline,
+.theme-bloom .warm-envelope-seal span,
+.theme-bloom .warm-envelope-seal small,
+.theme-bloom .hero .subtitle {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
 }
 
 .warm-envelope-seal:hover {
