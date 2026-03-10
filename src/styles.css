@@ -76,9 +76,7 @@ a {
   --hero-photo-position: center 34%;
   --hero-photo-width: 42rem;
   --hero-photo-radius: 0 0 42px 42px;
-  --warm-site-start-y: 48px;
-  --warm-site-start-scale: 0.9;
-  --warm-site-origin-y: 32%;
+  --warm-site-start-scale: 0.78;
   --panel-radius: 30px;
   --button-radius: 999px;
   --ambient-a: rgba(255, 244, 228, 0.88);
@@ -419,9 +417,11 @@ h2 {
 }
 
 .page-content {
-  transform-origin: 50% var(--warm-site-origin-y);
+  transform-origin: 50% calc(var(--stable-vh) * 50);
   will-change: opacity, transform;
-  transition: transform var(--warm-intro-duration, 2s) cubic-bezier(0.22, 0.7, 0.2, 1);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
 
 .page-shell.warm-intro-active .page-content,
@@ -431,12 +431,13 @@ h2 {
 }
 
 .page-shell.warm-intro-active .page-content {
-  transform: translate3d(0, var(--warm-site-start-y), 0)
-    scale(var(--warm-site-start-scale));
+  opacity: 0;
+  transform: scale(var(--warm-site-start-scale));
 }
 
 .page-shell.warm-intro-opening .page-content {
-  transform: translate3d(0, 0, 0) scale(1);
+  opacity: 0;
+  animation: warm-site-unfold var(--warm-intro-duration, 2s) ease-out forwards;
 }
 .hero-stage {
   position: relative;
@@ -1442,7 +1443,7 @@ h2 {
 }
 
 .form-choice input[type="checkbox"]::before {
-  content: "РІСљвЂњ";
+  content: "Р В Р вЂ Р РЋРЎв„ўР Р†Р вЂљРЎС™";
   position: absolute;
   inset: 0;
   display: flex;
@@ -2667,19 +2668,18 @@ h2 {
     opacity: 1;
   }
 
-  56% {
-    opacity: 1;
+  40% {
+    opacity: 0.3;
   }
 
-  78% {
-    opacity: 0.58;
+  65% {
+    opacity: 0;
   }
 
   100% {
     opacity: 0;
   }
 }
-
 
 @keyframes warm-envelope-split-left {
   0% {
@@ -2772,17 +2772,12 @@ h2 {
 @keyframes warm-site-unfold {
   0% {
     opacity: 0;
-    transform: translate3d(0, var(--warm-site-start-y), 0) scale(var(--warm-site-start-scale));
-  }
-
-  55% {
-    opacity: 0.06;
-    transform: translate3d(0, var(--warm-site-start-y), 0) scale(var(--warm-site-start-scale));
+    transform: scale(var(--warm-site-start-scale));
   }
 
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(1);
   }
 }
 
@@ -3042,10 +3037,12 @@ h2 {
   }
 
   .page-shell {
-    --warm-site-start-y: 38px;
-    --warm-site-start-scale: 0.86;
-    --warm-site-origin-y: 28%;
+    --warm-site-start-scale: 0.74;
     padding-bottom: calc(158px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .page-content {
+    transform-origin: 50% calc(var(--stable-vh) * 46);
   }
 
   .variant-dock {
