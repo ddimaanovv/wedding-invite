@@ -1001,14 +1001,14 @@ function App() {
             <img src={radisson} alt="Отель и свадебный зал" />
 
             <div>
-              <h3>Radisson Blu</h3>
-              <h5>Москва, Ленинский проспект, 90/3</h5>
+              <h3>Dolce Villa</h3>
+              <h5>Терпигорьево, Московская область</h5>
               <p className="details-text">{activeVariant.venueDescription}</p>
 
               <div className="actions">
                 <a
                   className="btn btn-primary"
-                  href="https://yandex.ru/maps/-/CPUV4VjH"
+                  href="https://yandex.ru/maps/-/CPBiR--a"
                   target="_blank"
                   rel="noreferrer"
                 >
