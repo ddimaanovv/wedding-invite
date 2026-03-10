@@ -1,4 +1,4 @@
-﻿import { startTransition, useEffect, useRef, useState } from "react";
+﻿import { startTransition, useCallback, useEffect, useRef, useState } from "react";
 import { getApp, getApps, initializeApp } from "firebase/app";
 import {
   addDoc,
@@ -537,7 +537,7 @@ function App() {
     };
   }, [activeHeroPhoto, shouldHideHeroPhoto]);
 
-  const revealVisibleFadeNodes = () => {
+  const revealVisibleFadeNodes = useCallback(() => {
     if (typeof window === "undefined") {
       return;
     }
@@ -560,7 +560,7 @@ function App() {
         node.classList.add("show");
       }
     });
-  };
+  }, []);
 
   useEffect(() => {
     const updateCountdown = () => {
@@ -619,7 +619,7 @@ function App() {
       fadeNodes.forEach((node) => observer.unobserve(node));
       observer.disconnect();
     };
-  }, []);
+  }, [activeVariant.key, revealVisibleFadeNodes]);
 
   useEffect(() => {
     if (!heroPhotoReady) {
@@ -633,7 +633,7 @@ function App() {
       window.cancelAnimationFrame(rafId);
       window.clearTimeout(timeoutId);
     };
-  }, [heroPhotoReady]);
+  }, [heroPhotoReady, revealVisibleFadeNodes]);
 
   useEffect(() => {
     if (submitStatus !== "success" || !rsvpSectionRef.current) {
@@ -890,9 +890,10 @@ function App() {
           </div>
 
           <div className="warm-envelope-ui">
-            <p className="warm-intro-overline">{WARM_INTRO_OVERLINE}</p>
+            <p className="warm-intro-heading" id="warm-intro-title">
+              {WARM_INTRO_OVERLINE}
+            </p>
             <button
-              id="warm-intro-title"
               type="button"
               className="warm-envelope-seal warm-envelope-open"
               onClick={handleWarmInvitationOpen}
@@ -1304,7 +1305,6 @@ function TelegramIcon() {
 }
 
 export default App;
-
 
 
 
