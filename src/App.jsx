@@ -1305,9 +1305,3 @@ function TelegramIcon() {
 }
 
 export default App;
-
-
-
-
-
-

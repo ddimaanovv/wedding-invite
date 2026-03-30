@@ -1,5 +1,6 @@
 :root {
   --stable-vh: 1svh;
+  --initial-viewport-height: 100vh;
 }
 
 * {
@@ -55,6 +56,13 @@ a {
   --display-font: "Cormorant Garamond", serif;
   --body-font: "Cormorant Garamond", serif;
   --page-background: linear-gradient(180deg, #fff, #f7f1e8);
+  --ambient-mobile-top: calc(-1 * env(safe-area-inset-top, 0px) - 2px);
+  --ambient-mobile-height: calc(
+    var(--stable-vh) * 100 +
+    env(safe-area-inset-top, 0px) +
+    env(safe-area-inset-bottom, 0px) +
+    180px
+  );
   --surface: rgba(255, 255, 255, 0.88);
   --surface-strong: rgba(255, 255, 255, 0.94);
   --border: rgba(180, 145, 102, 0.22);
@@ -598,6 +606,9 @@ h2 {
   align-items: center;
   text-decoration: none;
   color: var(--text-muted);
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+  outline: none;
 }
 
 .scroll-hint img {
@@ -623,6 +634,21 @@ h2 {
 .theme-scenic .scroll-hint img {
   width: 24px;
   height: 34px;
+}
+
+.scroll-hint:focus,
+.scroll-hint:active,
+.scroll-hint:focus-visible {
+  outline: none;
+}
+
+.theme-celestial .scroll-hint:active,
+.theme-scenic .scroll-hint:active,
+.theme-celestial .scroll-hint:focus-visible,
+.theme-scenic .scroll-hint:focus-visible {
+  background: rgba(255, 248, 239, 0.78);
+  border-color: rgba(191, 154, 92, 0.3);
+  box-shadow: 0 12px 26px rgba(14, 10, 8, 0.16);
 }
 
 .sparkles span {
@@ -2167,7 +2193,16 @@ h2 {
 .theme-celestial .ambient-bg {
   background:
     linear-gradient(180deg, rgba(10, 8, 12, 0.22), rgba(10, 8, 12, 0.36)),
-    url("./assets/tree.jpg") center / cover no-repeat;
+    url("./assets/tree.jpg") center top / cover no-repeat;
+}
+
+.theme-celestial.page-shell {
+  --ambient-mobile-height: calc(
+    var(--stable-vh) * 100 +
+    env(safe-area-inset-top, 0px) +
+    env(safe-area-inset-bottom, 0px) +
+    260px
+  );
 }
 
 .theme-celestial .ambient-wash,
@@ -2317,7 +2352,30 @@ h2 {
 .theme-scenic .ambient-bg {
   background:
     linear-gradient(180deg, rgba(17, 12, 7, 0.28), rgba(17, 12, 7, 0.42)),
-    url("./assets/background-5.jpg") center / cover no-repeat;
+    url("./assets/background-5.jpg") center top / cover no-repeat;
+}
+
+.theme-scenic.page-shell {
+  --ambient-mobile-height: calc(
+    var(--stable-vh) * 100 +
+    env(safe-area-inset-top, 0px) +
+    env(safe-area-inset-bottom, 0px) +
+    260px
+  );
+}
+
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 980px) {
+    .page-shell {
+      --ambient-mobile-top: calc(var(--initial-viewport-height) * -0.1);
+      --ambient-mobile-height: calc(var(--initial-viewport-height) * 1.3);
+    }
+
+    .theme-celestial.page-shell,
+    .theme-scenic.page-shell {
+      --ambient-mobile-height: calc(var(--initial-viewport-height) * 1.3);
+    }
+  }
 }
 
 .theme-scenic .ambient-wash,
@@ -3201,23 +3259,25 @@ h2 {
     will-change: transform;
   }
 
+}
+@media (max-width: 980px) {
+  .ambient-bg {
+    position: fixed;
+    top: var(--ambient-mobile-top);
+    right: 0;
+    bottom: auto;
+    left: 0;
+    height: var(--ambient-mobile-height);
+    min-height: var(--ambient-mobile-height);
+    max-height: var(--ambient-mobile-height);
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
   .theme-celestial .ambient-bg,
   .theme-scenic .ambient-bg {
-    bottom: calc(-1 * env(safe-area-inset-bottom, 0px) - 120px);
-    min-height: calc(100dvh + env(safe-area-inset-bottom, 0px) + 120px);
-  }
-
-  @supports (height: 100lvh) {
-    .theme-celestial .ambient-bg,
-    .theme-scenic .ambient-bg {
-      min-height: calc(100lvh + env(safe-area-inset-bottom, 0px) + 120px);
-    }
+    background-position: center top;
   }
 }
-
-
-
-
-
-
-
