@@ -1,4 +1,6 @@
-﻿const baseTheme = {
+import { SHARED_VARIANT_CONTENT, VARIANT_LABELS } from "./config/weddingData";
+
+const baseTheme = {
   "--hero-photo-position": "center 34%",
   "--hero-photo-width": "42rem",
   "--hero-photo-radius": "0 0 42px 42px",
@@ -25,7 +27,8 @@ const bloomTheme = {
   "--text-muted": "rgba(68, 49, 36, 0.56)",
   "--button-text": "#fffaf4",
   "--shadow": "0 26px 70px rgba(122, 88, 107, 0.16)",
-  "--hero-shell-bg": "linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(247, 233, 241, 0.88))",
+  "--hero-shell-bg":
+    "linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(247, 233, 241, 0.88))",
   "--hero-overlay":
     "linear-gradient(to bottom, rgba(46, 33, 41, 0.04), rgba(46, 33, 41, 0.18) 60%, rgba(255, 255, 255, 0.08) 100%)",
   "--photo-filter": "saturate(0.96) contrast(1.01)",
@@ -53,7 +56,8 @@ const velvetTheme = {
   "--text-muted": "rgba(247, 239, 230, 0.56)",
   "--button-text": "#100c11",
   "--shadow": "0 28px 80px rgba(0, 0, 0, 0.46)",
-  "--hero-shell-bg": "linear-gradient(145deg, rgba(22, 16, 24, 0.88), rgba(13, 10, 15, 0.74))",
+  "--hero-shell-bg":
+    "linear-gradient(145deg, rgba(22, 16, 24, 0.88), rgba(13, 10, 15, 0.74))",
   "--hero-overlay":
     "linear-gradient(to bottom, rgba(7, 5, 8, 0.18), rgba(7, 5, 8, 0.42) 64%, rgba(7, 5, 8, 0.22) 100%)",
   "--photo-filter": "saturate(0.88) brightness(0.86)",
@@ -81,7 +85,8 @@ const celestialTheme = {
   "--text-muted": "rgba(68, 49, 36, 0.56)",
   "--button-text": "#fffaf2",
   "--shadow": "0 24px 56px rgba(30, 19, 10, 0.16)",
-  "--hero-shell-bg": "linear-gradient(155deg, rgba(255, 251, 245, 0.9), rgba(244, 236, 225, 0.84) 54%, rgba(255, 248, 239, 0.92))",
+  "--hero-shell-bg":
+    "linear-gradient(155deg, rgba(255, 251, 245, 0.9), rgba(244, 236, 225, 0.84) 54%, rgba(255, 248, 239, 0.92))",
   "--hero-overlay":
     "linear-gradient(to bottom, rgba(28, 20, 13, 0.08), rgba(28, 20, 13, 0.18) 64%, rgba(255, 255, 255, 0.06) 100%)",
   "--photo-filter": "saturate(0.94) brightness(0.94)",
@@ -122,7 +127,8 @@ const scenicTheme = {
   "--display-font": '"Forum", serif',
   "--body-font": '"Forum", serif',
   "--page-background": "#ece1d3",
-  "--surface": "linear-gradient(140deg, rgba(255, 255, 255, 0.86), rgba(247, 241, 232, 0.8))",
+  "--surface":
+    "linear-gradient(140deg, rgba(255, 255, 255, 0.86), rgba(247, 241, 232, 0.8))",
   "--surface-strong": "rgba(255, 255, 255, 0.88)",
   "--border": "rgba(159, 127, 88, 0.24)",
   "--accent": "#c79a63",
@@ -131,8 +137,10 @@ const scenicTheme = {
   "--text-soft": "rgba(68, 49, 36, 0.76)",
   "--text-muted": "rgba(68, 49, 36, 0.56)",
   "--shadow": "0 24px 60px rgba(55, 33, 13, 0.18)",
-  "--hero-shell-bg": "linear-gradient(135deg, rgba(255, 248, 240, 0.82), rgba(231, 218, 201, 0.84))",
-  "--hero-overlay": "linear-gradient(to bottom, rgba(28, 20, 13, 0.14), rgba(28, 20, 13, 0.3) 60%, rgba(255, 255, 255, 0.06) 100%)",
+  "--hero-shell-bg":
+    "linear-gradient(135deg, rgba(255, 248, 240, 0.82), rgba(231, 218, 201, 0.84))",
+  "--hero-overlay":
+    "linear-gradient(to bottom, rgba(28, 20, 13, 0.14), rgba(28, 20, 13, 0.3) 60%, rgba(255, 255, 255, 0.06) 100%)",
   "--photo-filter": "saturate(0.98) contrast(1.02)",
   "--dock-bg": "rgba(255, 248, 240, 0.78)",
   "--chip-bg": "rgba(255, 255, 255, 0.64)",
@@ -142,68 +150,44 @@ const scenicTheme = {
 
 export const DEFAULT_VARIANT_KEY = "classic";
 
-const sharedContent = {
-  preview: "Спокойный, торжественный текст",
-  meta: {
-    title: "Михаил & София — свадебное приглашение",
-    description:
-      "Свадебное приглашение Михаила и Софии на 4 июля 2026 года.",
-  },
-  hero: {
-    kicker: "Классический вечер",
-    subtitle: "Свадебное приглашение",
-    appeal: "Дорогие гости!",
-    note:
-      "Приглашаем вас разделить с нами торжество, посвященное дню нашей свадьбы. Для нас будет огромной радостью провести этот счастливый день в кругу самых близких и дорогих людей.",
-  },
-  venueDescription:
-    "Романтичное место с потрясающим видом и необыкновенными закатами.",
-  details: [
-    "Свои теплые слова и пожелания приносите в сердцах, а подарки, если захотите, можно подготовить в конверте.",
-    "Вместо цветов мы будем рады бутылочке вина, которую однажды с удовольствием откроем и вспомним этот день.",
-  ],
-  rsvpIntro: "Пожалуйста, заполните анкету ниже.",
-  contactsNote: "Если появятся вопросы, свяжитесь с нами:",
-  footer: "С любовью, Михаил и София",
-};
-
 export const WEDDING_VARIANTS = [
   {
     key: "classic",
     scene: "soft",
-    label: "Классический",
-    ...sharedContent,
+    label: VARIANT_LABELS.classic,
+    ...SHARED_VARIANT_CONTENT,
     theme: softTheme,
   },
   {
     key: "warm",
     scene: "bloom",
-    label: "Теплый",
-    ...sharedContent,
+    label: VARIANT_LABELS.warm,
+    ...SHARED_VARIANT_CONTENT,
     theme: bloomTheme,
   },
   {
     key: "modern",
     scene: "velvet",
-    label: "Современный",
-    ...sharedContent,
+    label: VARIANT_LABELS.modern,
+    ...SHARED_VARIANT_CONTENT,
     theme: velvetTheme,
   },
   {
     key: "minimal",
     scene: "celestial",
-    label: "Сдержанный",
-    ...sharedContent,
+    label: VARIANT_LABELS.minimal,
+    ...SHARED_VARIANT_CONTENT,
     theme: celestialTheme,
   },
   {
     key: "scenic",
     scene: "scenic",
-    label: "Пятый",
-    ...sharedContent,
+    label: VARIANT_LABELS.scenic,
+    ...SHARED_VARIANT_CONTENT,
     theme: scenicTheme,
   },
 ];
+
 const variantsByKey = Object.fromEntries(
   WEDDING_VARIANTS.map((variant) => [variant.key, variant]),
 );
@@ -211,4 +195,3 @@ const variantsByKey = Object.fromEntries(
 export function getWeddingVariant(key) {
   return variantsByKey[key] ?? variantsByKey[DEFAULT_VARIANT_KEY];
 }
-

@@ -52,6 +52,18 @@ a {
   color: inherit;
 }
 
+.font-preload {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
 .page-shell {
   --display-font: "Cormorant Garamond", serif;
   --body-font: "Cormorant Garamond", serif;
@@ -1469,7 +1481,7 @@ h2 {
 }
 
 .form-choice input[type="checkbox"]::before {
-  content: "Р В Р вЂ Р РЋРЎв„ўР Р†Р вЂљРЎС™";
+  content: "\2713";
   position: absolute;
   inset: 0;
   display: flex;
