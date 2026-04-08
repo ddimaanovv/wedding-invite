@@ -52,18 +52,6 @@ a {
   color: inherit;
 }
 
-.font-preload {
-  position: fixed;
-  left: -9999px;
-  top: -9999px;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-}
-
 .page-shell {
   --display-font: "Cormorant Garamond", serif;
   --body-font: "Cormorant Garamond", serif;
@@ -165,9 +153,9 @@ h2 {
 .variant-dock-shell {
   position: fixed;
   left: 50%;
-  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  bottom: 20px;
   z-index: 30;
-  width: min(760px, calc(100% - 2rem));
+  width: min(760px, 100%);
   margin: 0;
   padding: 0;
   transform: translateX(-50%);
@@ -3101,7 +3089,6 @@ h2 {
   .variant-dock-shell {
     left: 0.5rem;
     right: 0.5rem;
-    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
     width: auto;
     transform: none;
   }

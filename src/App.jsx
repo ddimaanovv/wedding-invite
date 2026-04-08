@@ -92,7 +92,7 @@ function App() {
     : "";
   const pageShellClassName = `page-shell theme-${activeVariant.scene}${warmIntroClassName}`;
 
-  useFadeReveal(activeVariant.key);
+  useFadeReveal(activeVariant.key, isInitialFontsReady);
 
   useEffect(() => {
     let cancelled = false;
@@ -398,28 +398,12 @@ function App() {
     void switchVariant();
   };
 
-  const fontPreloadProbe = (
-    <div className="font-preload" aria-hidden="true">
-      <span style={{ fontFamily: '"Cormorant Garamond", serif' }}>Wedding</span>
-      <span style={{ fontFamily: '"Great Vibes", cursive' }}>Wedding</span>
-      <span style={{ fontFamily: '"Amatic SC", cursive' }}>Wedding</span>
-      <span style={{ fontFamily: '"Caveat", cursive' }}>Wedding</span>
-      <span style={{ fontFamily: '"Forum", serif' }}>Wedding</span>
-      <span style={{ fontFamily: '"Inter", sans-serif' }}>Wedding</span>
-    </div>
-  );
-
   if (!isInitialFontsReady) {
-    return (
-      <div className={pageShellClassName} style={activeVariant.theme}>
-        {fontPreloadProbe}
-      </div>
-    );
+    return <div className={pageShellClassName} style={activeVariant.theme} />;
   }
 
   return (
     <div className={pageShellClassName} style={activeVariant.theme}>
-      {fontPreloadProbe}
       <AmbientBackground />
 
       <WarmIntroGate
