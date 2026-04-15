@@ -6,11 +6,11 @@ import {
   getFirestore,
   serverTimestamp,
 } from "firebase/firestore";
-import mainPhoto1 from "./assets/main-photo-1.png";
-import mainPhoto2 from "./assets/main-photo-2.avif";
-import mainPhoto3 from "./assets/main-photo-3.png";
-import mainPhoto4 from "./assets/main-photo-4.avif";
-import mainPhoto5 from "./assets/main-photo-5.png";
+import mainPhoto1 from "./assets/main-photo-1.webp";
+import mainPhoto2 from "./assets/main-photo-2.webp";
+import mainPhoto3 from "./assets/main-photo-3.webp";
+import mainPhoto4 from "./assets/main-photo-4.webp";
+import mainPhoto5 from "./assets/main-photo-5.webp";
 import { AmbientBackground } from "./components/AmbientBackground";
 import { ContactsSection } from "./components/ContactsSection";
 import { DateSection } from "./components/DateSection";
